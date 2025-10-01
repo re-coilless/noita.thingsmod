@@ -1,53 +1,13 @@
+local content_library = dofile_once("mods/noita.thingsmod/content.lua")
 
-function OnModPreInit() 
-
+local function register_callbacks()
+	for _, module_id in ipairs(content_library) do
+		local mod = dofile_once("mods/noita.thingsmod/content/" .. module_id .. "/module.lua")
+		if mod.callbacks then
+			for callback_name, callback_func in pairs(mod.callbacks) do
+				_G[callback_name] = callback_func
+			end
+		end
+	end
 end
-
-function OnModInit() 
-
-end
-
-function OnModPostInit() 
-
-end
-
-function OnPlayerSpawned( player_entity ) 
-
-end
-
-function OnPlayerDied( player_entity ) 
-
-end
-
-function OnWorldInitialized() 
-
-end
-
-function OnWorldPreUpdate() 
-
-end
-
-function OnWorldPostUpdate() 
-
-end
-
-function OnBiomeConfigLoaded() 
-
-end
-
-function OnMagicNumbersAndWorldSeedInitialized() 
-
-end
-
-function OnPausedChanged( is_paused, is_inventory_pause ) 
-
-end
-
-function OnModSettingsChanged() 
-
-end
-
-function OnPausePreUpdate() 
-
-end
-	
+register_callbacks()
