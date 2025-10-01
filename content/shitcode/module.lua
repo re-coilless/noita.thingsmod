@@ -1,6 +1,7 @@
 return {
 	name = "Shitcode",
 	description = "Adds shit code",
+	authors = "Username here",
 	OnModPreInit = function () 
 
 	end,
