@@ -1,57 +1,54 @@
 return {
 	name = "Shitcode",
 	description = "Adds shit code",
-	callbacks = {
-		OnModPreInit = function () 
+	OnModPreInit = function () 
 
-		end,
-		OnModInit = function () 
+	end,
+	OnModInit = function () 
 
-		end,
+	end,
 
-		OnModPostInit = function () 
+	OnModPostInit = function () 
 
-		end,
+	end,
 
-		OnPlayerSpawned = function ( player_entity ) 
+	OnPlayerSpawned = function ( player_entity ) 
 
-		end,
+	end,
 
-		OnPlayerDied = function ( player_entity ) 
+	OnPlayerDied = function ( player_entity ) 
 
-		end,
+	end,
 
-		OnWorldInitialized = function () 
+	OnWorldInitialized = function () 
 
-		end,
+	end,
 
-		OnWorldPreUpdate = function () 
+	OnWorldPreUpdate = function () 
 
-		end,
+	end,
 
-		OnWorldPostUpdate = function () 
+	OnWorldPostUpdate = function () 
 
-		end,
+	end,
 
-		OnBiomeConfigLoaded = function () 
+	OnBiomeConfigLoaded = function () 
 
-		end,
+	end,
 
-		OnMagicNumbersAndWorldSeedInitialized = function () 
-			print("test!")
-		end,
+	OnMagicNumbersAndWorldSeedInitialized = function () 
+		print("test!")
+	end,
 
-		OnPausedChanged = function ( is_paused, is_inventory_pause ) 
+	OnPausedChanged = function ( is_paused, is_inventory_pause ) 
 
-		end,
+	end,
 
-		OnModSettingsChanged = function () 
+	OnModSettingsChanged = function () 
 
-		end,
+	end,
 
-		OnPausePreUpdate = function () 
+	OnPausePreUpdate = function () 
 
-		end
-	
-	}
+	end
 }
