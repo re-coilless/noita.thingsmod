@@ -1,5 +1,5 @@
 return {
-	name = "Shitcode",
+	name = "Shitcode Example",
 	description = "Adds shit code",
 	OnModPreInit = function () 
 

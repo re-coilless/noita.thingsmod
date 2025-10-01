@@ -1,0 +1,2 @@
+Make a folder here, with a module.lua file. Check example for reference.
+Add the name of your folder to the content.lua table.
