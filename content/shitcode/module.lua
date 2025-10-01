@@ -38,7 +38,7 @@ return {
 		end,
 
 		OnMagicNumbersAndWorldSeedInitialized = function () 
-
+			print("test!")
 		end,
 
 		OnPausedChanged = function ( is_paused, is_inventory_pause ) 

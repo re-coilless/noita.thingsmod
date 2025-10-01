@@ -10,4 +10,5 @@ local function register_callbacks()
 		end
 	end
 end
+
 register_callbacks()
