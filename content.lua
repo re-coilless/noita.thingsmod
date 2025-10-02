@@ -4,6 +4,7 @@
 local M = {
 	"example",
 	"simple_perks",
+	"good_book_of_cats",
 }
 
 return M
