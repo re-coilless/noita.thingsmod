@@ -1,3 +1,4 @@
+local module_utils = require "lib.module_utils.module_utils"
 ---@type Module
 local M = {
 	name = "Conga Stuff",
@@ -5,10 +6,10 @@ local M = {
 	authors = "Conga Lyne",
 	OnModInit = function ()
 		-- Custom Perk support injection
-		ModLuaFileAppend("data/scripts/perks/perk_list.lua", modpath "scripts/perks/custom_perks.lua")
+		ModLuaFileAppend("data/scripts/perks/perk_list.lua", module_utils.modpath "scripts/perks/custom_perks.lua")
 
 		--Appending extra modifiers
-		ModLuaFileAppend("data/scripts/gun/gun_extra_modifiers.lua", modpath "scripts/gun/gun_extra_populator.lua")
+		ModLuaFileAppend("data/scripts/gun/gun_extra_modifiers.lua", module_utils.modpath "scripts/gun/gun_extra_populator.lua")
 	end,
 
 	OnPlayerFirstSpawned = function(player_entity)
