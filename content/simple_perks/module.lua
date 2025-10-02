@@ -40,6 +40,6 @@ return {
 		end
 
 		-- Inject bountiful hunter power-ups
-		ModLuaFileAppend("data/scripts/items/drop_money.xml", "mods/noita.thingsmod/content/simple_perks/scripts/drop_booster.lua")
+		ModLuaFileAppend("data/scripts/items/drop_money.lua", "mods/noita.thingsmod/content/simple_perks/scripts/drop_booster.lua")
 	end,
 }

@@ -50,8 +50,8 @@ local custom_perk_perkappends = {
 	{
 		id = "BOUNTIFUL_HUNTER",
 		id_prepend = "GENOME_MORE_LOVE",
-		ui_name = "$perk_thingsmod_bountiful_hunter",
-		ui_description = "$perk_thingsmod_bountiful_hunter",
+		ui_name = "$perk_thingsmod_bountiful_hunter_name",
+		ui_description = "$perk_thingsmod_bountiful_hunter_desc",
 		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/bountiful_hunter_ui.png",
 		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/bountiful_hunter.png",
 		not_in_default_perk_pool = false,
