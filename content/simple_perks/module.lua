@@ -1,5 +1,4 @@
----@type nxml
-local nxml = dofile_once("mods/noita.thingsmod/lib/nxml/nxml.lua")
+local nxml = require "lib/nxml/nxml"
 local module_filepath = "mods/noita.thingsmod/content/simple_perks/"
 
 ---@type Module

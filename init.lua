@@ -1,5 +1,6 @@
----@type string[]
-local modules = dofile_once("mods/noita.thingsmod/content.lua")
+dofile_once("mods/noita.thingsmod/require.lua")
+
+local modules = require "content"
 
 local extra_translations = ""
 
