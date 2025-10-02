@@ -1,10 +1,7 @@
-
 local custom_perk_perkappends = {
 	{
 		id = "WET_ARMOR",
 		id_append = "STAINLESS_ARMOUR",
-		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/sweatarmor_ui.png",
-		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/sweatarmor.png",
 		not_in_default_perk_pool = false,
 		stackable = STACKABLE_YES,
 		usable_by_enemies = false,
@@ -19,8 +16,6 @@ local custom_perk_perkappends = {
 	{
 		id = "NOHIT_CRITS",
 		id_prepend = "RISKY_CRITICAL",
-		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/nohit_crits_ui.png",
-		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/nohit_crits.png",
 		not_in_default_perk_pool = false,
 		stackable = STACKABLE_YES,
 		usable_by_enemies = false,
@@ -50,6 +45,8 @@ for _, v in ipairs(custom_perk_perkappends) do
 	local prefix = "noita_thingsmod_simple_perks_"
 	v.ui_name = "$" .. prefix .. "perkname_" ..id_lower
 	v.ui_description = "$" .. prefix .. "perkdesc_" ..id_lower
+	v.ui_icon = ("mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/%s_ui.png"):format(id_lower)
+	v.perk_icon = ("mods/noita.thingsmod/content/simple_perks/items_gfx/perks/%s.png"):format(id_lower)
 end
 
 
