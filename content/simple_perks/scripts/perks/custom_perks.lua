@@ -58,7 +58,16 @@ local custom_perk_perkappends = {
 		stackable = STACKABLE_YES,
 		usable_by_enemies = false,
 		author = "Copi",
-		-- No func needed, we're just cool like that (see drop_booster and such)
+		func = function( entity_perk_item, entity_who_picked, item_name )
+			local e = EntityCreateNew()
+			EntityAddComponent2(e, "ShotEffectComponent", {extra_modifier="thingsmod_crit_dmg"})
+			EntityAddComponent2(e, "InheritTransformComponent")
+			EntityAddTag( e, "perk_entity" )
+			EntityAddChild( entity_who_picked, e )
+		end,
+		-- OG: increases spawns, multiplies maxhp by 0.95^x, drops temp boosters
+		-- idea: on-kill you gain diminishing damage boost against the same enemy type? nah clunky
+		-- eh fuck it, just boosters
 	},
 }
 
