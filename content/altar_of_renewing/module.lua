@@ -27,5 +27,6 @@ return {
 		if ModIsEnabled("noitavania") then
 			ModLuaFileAppend("data/scripts/biomes/coalmine_alt.lua", "mods/noita.thingsmod/content/altar_of_renewing/files/biomes/coalmine_alt.lua")
 		end
+		print("Did this run?")
 	end
 }

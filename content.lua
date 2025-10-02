@@ -3,5 +3,6 @@
 return {
 	"example",
 	"simple_perks",
+	"altar_of_renewing"
 }
 

@@ -1,4 +1,5 @@
 function get_probability_value_for_inserting(spawn_table, percent)
+ percent = 10000
   local total_prob = 0
   if spawn_table.total_prob ~= 0 then
     total_prob = spawn_table.total_prob
