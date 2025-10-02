@@ -47,6 +47,19 @@ local custom_perk_perkappends = {
 			GlobalsSetValue("NOITA_THINGSMOD_NOHIT_CRITS_COUNT","0")
 		end,
 	},
+	{
+		id = "BOUNTIFUL_HUNTER",
+		id_prepend = "GENOME_MORE_LOVE",
+		ui_name = "$perk_thingsmod_bountiful_hunter",
+		ui_description = "$perk_thingsmod_bountiful_hunter",
+		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/bountiful_hunter_ui.png",
+		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/bountiful_hunter.png",
+		not_in_default_perk_pool = false,
+		stackable = STACKABLE_YES,
+		usable_by_enemies = false,
+		author = "Copi",
+		-- No func needed, we're just cool like that (see drop_booster and such)
+	},
 }
 
 
