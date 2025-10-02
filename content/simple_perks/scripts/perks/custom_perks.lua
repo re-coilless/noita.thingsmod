@@ -1,12 +1,7 @@
-
 local custom_perk_perkappends = {
 	{
 		id = "WET_ARMOR",
 		id_append = "STAINLESS_ARMOUR",
-		ui_name = "$perk_thingsmod_wet_armor_name",
-		ui_description = "$perk_thingsmod_wet_armor_desc",
-		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/sweatarmor_ui.png",
-		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/sweatarmor.png",
 		not_in_default_perk_pool = false,
 		stackable = STACKABLE_YES,
 		usable_by_enemies = false,
@@ -21,10 +16,6 @@ local custom_perk_perkappends = {
 	{
 		id = "NOHIT_CRITS",
 		id_prepend = "RISKY_CRITICAL",
-		ui_name = "$perk_thingsmod_nohit_crits_name",
-		ui_description = "$perk_thingsmod_nohit_crits_desc",
-		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/nohit_crits_ui.png",
-		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/nohit_crits.png",
 		not_in_default_perk_pool = false,
 		stackable = STACKABLE_YES,
 		usable_by_enemies = false,
@@ -38,7 +29,7 @@ local custom_perk_perkappends = {
 			EntityAddChild( entity_who_picked, child_id )
 		end,
 		func_remove = function( entity_id )
-			local dunkorslammod_targets = EntityGetAllChildren(entity_id)
+			local dunkorslammod_targets = EntityGetAllChildren(entity_id) or {}
 			for i,v in ipairs( dunkorslammod_targets ) do
 				if ( v ~= entity_id ) and ( EntityGetName( v ) == "thingsmod_perk_nohit_crits" ) then
 					EntityKill ( v )
@@ -48,6 +39,15 @@ local custom_perk_perkappends = {
 		end,
 	},
 }
+
+for _, v in ipairs(custom_perk_perkappends) do
+	local id_lower = v.id:lower()
+	local prefix = "noita_thingsmod_simple_perks_"
+	v.ui_name = "$" .. prefix .. "perkname_" ..id_lower
+	v.ui_description = "$" .. prefix .. "perkdesc_" ..id_lower
+	v.ui_icon = ("mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/%s_ui.png"):format(id_lower)
+	v.perk_icon = ("mods/noita.thingsmod/content/simple_perks/items_gfx/perks/%s.png"):format(id_lower)
+end
 
 
 do

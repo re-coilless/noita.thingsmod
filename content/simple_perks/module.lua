@@ -18,12 +18,6 @@ return {
 		--Appending extra modifiers
 		ModLuaFileAppend("data/scripts/gun/gun_extra_modifiers.lua", module_filepath .. "scripts/gun/gun_extra_populator.lua")
 
-		local translations = ModTextFileGetContent("data/translations/common.csv")
-		local new_translations = ModTextFileGetContent(module_filepath .. "translations.csv")
-		translations = translations .. "\n" .. new_translations .. "\n"
-		translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
-		ModTextFileSetContent("data/translations/common.csv", translations)
-
 		--Player Editor
 		for content in nxml.edit_file("data/entities/player_base.xml") do
 			content:add_child(
