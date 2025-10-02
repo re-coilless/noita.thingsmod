@@ -5,6 +5,7 @@ local M = {
 	"example",
 	"simple_perks",
 	"index_compendium",
+	"spells_module",
 }
 
 return M
