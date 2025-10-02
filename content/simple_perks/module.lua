@@ -1,4 +1,5 @@
-local nxml = dofile_once("mods/Apotheosis/lib/nxml.lua")
+---@type nxml
+local nxml = dofile_once("mods/noita.thingsmod/lib/nxml/nxml.lua")
 local module_filepath = "mods/noita.thingsmod/content/simple_perks/"
 
 return {
@@ -24,19 +25,15 @@ return {
 		ModTextFileSetContent("data/translations/common.csv", translations)
 
 		--Player Editor
-		do
-			local path = "data/entities/player_base.xml"
-				local xml = nxml.parse(ModTextFileGetContent(path))
-				xml:add_child(nxml.parse([[
-				<LuaComponent
-				script_damage_about_to_be_received="mods/noita.thingsmod/content/simple_perks/scripts/perks/take_damage.lua"
-				execute_every_n_frame="-1"
-				execute_times="-1"
-				remove_after_executed="0"
-				>
-				</LuaComponent>
-				]]))
-			ModTextFileSetContent(path, tostring(xml))
+		for content in nxml.edit_file("data/entities/player_base.xml") do
+			content:add_child(
+				nxml.new_element("LuaComponent", {
+					script_damage_about_to_be_received = "mods/noita.thingsmod/content/simple_perks/scripts/perks/take_damage.lua",
+					execute_every_n_frame = -1,
+					execute_times = -1,
+					remove_after_executed = false,
+				})
+			)
 		end
 	end,
 
