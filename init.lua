@@ -25,18 +25,21 @@ translations = translations .. extra_translations
 translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
+NOITATHINGS_MODULE_BREAKS = {}
 local function do_callback(callback_name, ...)
 	for _, module in ipairs(modules) do
 		NOITATHINGS_MODULE = module
 		local mod = dofile_once("mods/noita.thingsmod/content/" .. module .. "/module.lua")
-		if mod and mod[callback_name] then
-			local success, error_msg = pcall(mod[callback_name], ...)
-			if not success then print(mod.name .. " Error: " .. error_msg) end
+		if mod and mod[callback_name] and not( NOITATHINGS_MODULE_BREAKS[module]) then
+			local success, error_msg = pcall(mod[callback_name], ...) --if runs normally and returns true, all the future module callbacks will be skipped
+			if not success then print(mod.name .. " Error: " .. error_msg)
+			elseif error_msg then NOITATHINGS_MODULE_BREAKS[module] = true end
 		end
 	end
 end
 
 local callback_names = {
+	"OnThingsCalled",
 	"OnBiomeConfigLoaded",
 	"OnCountSecrets",
 	"OnMagicNumbersAndWorldSeedInitialized",
@@ -58,6 +61,8 @@ for _, callback_name in ipairs(callback_names) do
 		do_callback(callback_name, ...)
 	end
 end
+
+OnThingsCalled(modules)
 
 function OnPlayerSpawned(...)
 	do_callback("OnPlayerSpawned", ...)
