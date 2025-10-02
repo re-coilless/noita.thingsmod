@@ -27,6 +27,7 @@ ModTextFileSetContent("data/translations/common.csv", translations)
 
 local function do_callback(callback_name, ...)
 	for _, module in ipairs(modules) do
+		NOITATHINGS_MODULE = module
 		local mod = dofile_once("mods/noita.thingsmod/content/" .. module .. "/module.lua")
 		if mod and mod[callback_name] then
 			local success, error_msg = pcall(mod[callback_name], ...)
