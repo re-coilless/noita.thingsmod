@@ -2,7 +2,8 @@
 local nxml = dofile_once("mods/noita.thingsmod/lib/nxml/nxml.lua")
 local module_filepath = "mods/noita.thingsmod/content/simple_perks/"
 
-return {
+---@type Module
+local M = {
 	name = "Conga Stuff",
 	description = "Adds stuff",
 	authors = "Conga Lyne",
@@ -75,3 +76,5 @@ return {
 
 	end
 }
+
+return M

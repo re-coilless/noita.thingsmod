@@ -1,0 +1,20 @@
+---All functions are optional, includes all vanilla callbacks and `OnPlayerFirstSpawned`
+---@class (exact) Module
+---@field name string
+---@field description string
+---@field authors string
+---@field OnModPreInit fun()?
+---@field OnModInit fun()?
+---@field OnModPostInit fun()?
+---Called at the start of a run when the player spawns, not called on restarts
+---@field OnPlayerFirstSpawned fun(player_entity: entity_id)?
+---@field OnPlayerSpawned fun(player_entity: entity_id)?
+---@field OnPlayerDied fun(player_entity: entity_id)?
+---@field OnWorldInitialized fun()?
+---@field OnWorldPreUpdate fun()?
+---@field OnWorldPostUpdate fun()?
+---@field OnBiomeConfigLoaded fun()?
+---@field OnMagicNumbersAndWorldSeedInitialized fun()?
+---@field OnPausedChanged fun(is_paused: boolean, is_inventory_pause: boolean)?
+---@field OnModSettingsChanged fun()?
+---@field OnPausePreUpdate fun()?
