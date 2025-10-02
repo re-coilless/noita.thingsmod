@@ -1,0 +1,12 @@
+<Entity name="thingsmod_perk_nohit_crits">
+	<InheritTransformComponent>
+    </InheritTransformComponent>
+		
+	<ShotEffectComponent
+		_enabled="1"
+		_tags="invincible"
+		extra_modifier="thingsmod_nohit_crits"
+		>
+	</ShotEffectComponent>
+  
+</Entity>
