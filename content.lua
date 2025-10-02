@@ -2,4 +2,5 @@
 return {
 	"example",
 	"simple_perks",
+	"spells_module",
 }
