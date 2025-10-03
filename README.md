@@ -34,7 +34,7 @@ To create a feature create a feature branch to work on
 git switch -c my_awesome_feature
 ```
 
-Make some changes and commit them
+Make a new module for your content and commit it
 
 ```sh
 mkdir content/some_module
