@@ -1,14 +1,20 @@
+-- some mod seems to cause issues if require is defined, CE?
+local _require = require
+dofile("mods/noita.thingsmod/require.lua")
+local table_utils = require "lib.table_utils.table_utils"
+
 local custom_spellappends = {
 	{
 		id          = "MONO_CAST",
-        id_prepend  = "BURST_2",
+		id_prepend  = "BURST_2",
 		type 		= ACTION_TYPE_DRAW_MANY,
 		spawn_level                       = "0,1",
 		spawn_probability                 = "0.1,0.1",
-        author = "Conga Lyne",
+		author = "Conga Lyne",
 		price = 100,
 		mana = 0,
 		action 		= function()
+			do return end
             if ( #deck > 0 ) then
                 
                 local function isSpellPresent(table_to_search,id)
@@ -54,8 +60,6 @@ local custom_spellappends = {
             draw_actions( 1, true ) 
 		end,
 	},
-    --[[
-    ]]--
     {
         id          = "COGWORK_SENTINEL",
         type 		= ACTION_TYPE_PROJECTILE,
@@ -68,8 +72,8 @@ local custom_spellappends = {
         pandorium_ignore = true,
         action 		= function()
             if reflecting then
-                Reflection_RegisterProjectile( "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/cogwork_sentinel_projectile.xml" ) --Sentinel's Projectile Filepath
-                current_reload_time = current_reload_time + 20
+                add_projectile( "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/cogwork_sentinel_projectile.xml" ) --Sentinel's Projectile Filepath
+                current_reload_time = current_reload_time + 60
                 return
             end
 
@@ -99,32 +103,10 @@ for _, v in ipairs(custom_spellappends) do
 	v.name = "$noita_thingsmod_spells_module_actionname_" .. id_lower
 	v.description = "$noita_thingsmod_spells_module_actiondesc_" .. id_lower
 	v.sprite = ("mods/noita.thingsmod/content/spells_module/ui_gfx/gun_actions/%s.png"):format(id_lower)
+	v.id = "NOITA_THINGSMOD_" .. v.id
+	v.author = v.author or "Every Things Dev Team"
+	v.mod = v.mod or "Every Things"
 end
 
-
-
-local function append_thingsmod_spells()
-    for k=1,#custom_spellappends do
-        local v = custom_spellappends[k]
-        v.id = "NOITA_THINGSMOD_" .. v.id
-        v.author    = v.author  or "Mod Name Dev Team"
-        v.mod       = v.mod     or "Mod Name Mod"
-        if v.id_append == nil and v.id_prepend == nil then
-            table.insert(actions,v)
-        else
-            for z=1,#actions
-            do
-                local c = actions[z]
-                if c.id == v.id_prepend then
-                    table.insert(actions,z,v)
-                    break
-                elseif c.id == v.id_append or z == #actions then
-                    table.insert(actions,z + 1,v)
-                    break
-                end
-            end
-        end
-    end
-end
-
-append_thingsmod_spells()
+table_utils.positional_insert(actions, custom_spellappends)
+require = _require
