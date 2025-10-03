@@ -4,20 +4,20 @@
 ---@field name string
 ---@field description string
 ---@field authors string
----@field OnModPreInit (fun(): boolean)?
----@field OnModInit (fun(): boolean)?
----@field OnModPostInit (fun(): boolean)?
+---@field OnModPreInit (fun(): boolean?)?
+---@field OnModInit (fun(): boolean?)?
+---@field OnModPostInit (fun(): boolean?)?
 ---Called at the start of a run when the player spawns, not called on restarts
----@field OnPlayerFirstSpawned (fun(player_entity: entity_id): boolean)?
----@field OnPlayerSpawned (fun(player_entity: entity_id): boolean)?
----@field OnPlayerDied (fun(player_entity: entity_id): boolean)?
----@field OnWorldInitialized (fun(): boolean)?
----@field OnWorldPreUpdate (fun(): boolean)?
----@field OnWorldPostUpdate (fun(): boolean)?
----@field OnBiomeConfigLoaded (fun(): boolean)?
----@field OnMagicNumbersAndWorldSeedInitialized (fun(): boolean)?
----@field OnPausedChanged (fun(is_paused: boolean, is_inventory_pause: boolean): boolean)?
----@field OnModSettingsChanged (fun(): boolean)?
----@field OnPausePreUpdate (fun(): boolean)?
+---@field OnPlayerFirstSpawned (fun(player_entity: entity_id): boolean?)?
+---@field OnPlayerSpawned (fun(player_entity: entity_id): boolean?)?
+---@field OnPlayerDied (fun(player_entity: entity_id): boolean?)?
+---@field OnWorldInitialized (fun(): boolean?)?
+---@field OnWorldPreUpdate (fun(): boolean?)?
+---@field OnWorldPostUpdate (fun(): boolean?)?
+---@field OnBiomeConfigLoaded (fun(): boolean?)?
+---@field OnMagicNumbersAndWorldSeedInitialized (fun(): boolean?)?
+---@field OnPausedChanged (fun(is_paused: boolean, is_inventory_pause: boolean): boolean?)?
+---@field OnModSettingsChanged (fun(): boolean?)?
+---@field OnPausePreUpdate (fun(): boolean?)?
 ---Runs in the init context
----@field OnThingsCalled (fun(modules: string[]): boolean)?
+---@field OnThingsCalled (fun(modules: string[]): boolean?)?
