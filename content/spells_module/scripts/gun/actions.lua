@@ -68,8 +68,8 @@ local custom_spellappends = {
         pandorium_ignore = true,
         action 		= function()
             if reflecting then
-                Reflection_RegisterProjectile( "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/cogwork_sentinel_projectile.xml" ) --Sentinel's Projectile Filepath
-                current_reload_time = current_reload_time + 20
+                add_projectile( "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/cogwork_sentinel_projectile.xml" ) --Sentinel's Projectile Filepath
+                current_reload_time = current_reload_time + 60
                 return
             end
 
@@ -81,11 +81,6 @@ local custom_spellappends = {
 
                     BeginProjectile( "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/cogwork_sentinel.xml" ) --Sentinel
                     EndProjectile()
-                    register_action({
-                        --Hacky but functional, I'm probably wildly misusing this -Conga
-                        action_description = DontTouch_Data[2],
-                        lifetime_add = c_old["lifetime_add"],
-                    })
                     SetProjectileConfigs()
                 EndTrigger()
             EndProjectile()
