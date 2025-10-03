@@ -1,4 +1,4 @@
----@class table_utilsa
+---@class table_utils
 local M = {}
 
 ---@class PositionallyInsertable
