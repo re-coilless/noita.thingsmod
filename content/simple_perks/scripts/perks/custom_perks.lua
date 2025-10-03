@@ -38,6 +38,29 @@ local custom_perk_perkappends = {
 			GlobalsSetValue("NOITA_THINGSMOD_NOHIT_CRITS_COUNT","0")
 		end,
 	},
+	{
+		id = "BOUNTIFUL_HUNTER",
+		id_prepend = "GENOME_MORE_LOVE",
+		ui_name = "$perk_thingsmod_bountiful_hunter_name",
+		ui_description = "$perk_thingsmod_bountiful_hunter_desc",
+		ui_icon = "mods/noita.thingsmod/content/simple_perks/ui_gfx/perk_icons/bountiful_hunter_ui.png",
+		perk_icon = "mods/noita.thingsmod/content/simple_perks/items_gfx/perks/bountiful_hunter.png",
+		not_in_default_perk_pool = false,
+		stackable = STACKABLE_YES,
+		usable_by_enemies = false,
+		author = "Copi",
+		func = function( entity_perk_item, entity_who_picked, item_name )
+			local e = EntityCreateNew()
+			EntityAddComponent2(e, "ShotEffectComponent", {extra_modifier="thingsmod_crit_dmg"})
+			EntityAddComponent2(e, "InheritTransformComponent")
+			EntityAddTag( e, "perk_entity" )
+			EntityAddChild( entity_who_picked, e )
+		end,
+		-- OG: increases spawns, multiplies maxhp by 0.95^x, drops temp boosters
+		-- idea: on-kill you gain diminishing damage boost against the same enemy type? nah clunky
+		-- eh fuck it, just boosters
+		-- lets go we can go back to the original concept
+	},
 }
 
 for _, v in ipairs(custom_perk_perkappends) do
