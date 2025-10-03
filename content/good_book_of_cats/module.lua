@@ -33,6 +33,10 @@ local cats = {
         img = "mods/noita.thingsmod/cats/roger.jpg",
         name = "Roger",
     },
+    {
+        img = "mods/noita.thingsmod/cats/ella.png",
+        name = "Ella",
+    },
 }
 
 function M.OnModInit()
