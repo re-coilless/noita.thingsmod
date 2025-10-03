@@ -1,7 +1,8 @@
-return {
+---@type Module
+local M = {
 	name = "Altar of Renewing",
 	description = "Altar that resets the world with a new seed. Surely this will have no repercussions.",
-	authors = "Evaisa",
+	authors = { "Evaisa" },
 	OnModPreInit = function () 
 		ModLuaFileAppend("data/scripts/biomes/coalmine.lua", "mods/noita.thingsmod/content/altar_of_renewing/files/biomes/coalmine.lua")
 		ModLuaFileAppend("data/scripts/biomes/excavationsite.lua", "mods/noita.thingsmod/content/altar_of_renewing/files/biomes/excavationsite.lua")
@@ -30,3 +31,5 @@ return {
 		print("Did this run?")
 	end
 }
+
+return M
