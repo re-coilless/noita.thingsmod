@@ -5,11 +5,14 @@ return {
 	
 	-- OnThingsCalled = function( modules ) end,
 
-	--disclaimer that not all photos are accurate (some species are incredibly hard to source good pictures of in both forms)
+	--The Good Book of Kats (obtained by throwing good book of cats to the hiisi anvil) "Hm, looks like the process failed... Don't worry though, you can still salvage it with a little bit of emerald magic."
+	--The Best Book of Cats (obtained by throwing good book of kats to the hiisi anvil) "A book containing pictures of cats. So very precious."
 
-	--The Best Book of Cats (obtained by throwing good book of kats to the hiisi anvil)
-	--The Good Book of Kats (obtained by throwing good book of cats to the hiisi anvil)
-	--names, child/adult forms (all pics to 216 res), backstory
+	--check that cats module is enabled
+	--add note to cat book about anvil
+	--disclaimer that not all photos are accurate (some species are incredibly hard to source good pictures of in both forms)
 	--pet counter that is stored in the settings
-	--page flipping sound and anim
+	--page flipping sound
+
+	--names, backstory
 }
