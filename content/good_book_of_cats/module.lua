@@ -4,7 +4,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 local M = {
     name = "The Good Book of Cats",
     description = "Adds the Good Book of Cats",
-    authors = "dextercd",
+    authors = { "dextercd" },
 }
 
 local gui
