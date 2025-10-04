@@ -14,8 +14,6 @@ local M = {
 	--disclaimer that not all photos are accurate (some species are incredibly hard to source good pictures of in both forms)
 	--pet counter that is stored in the settings
 	--page flipping sound
-
-	--names, backstory
 }
 
 return M
