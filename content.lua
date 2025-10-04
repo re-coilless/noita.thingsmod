@@ -8,6 +8,7 @@ local M = {
 	"good_book_of_cats",
 	"index_compendium",
 	"spells_module",
+	"synergies",
 	-- "debug_error", -- NOTE: if you are testing changes to the error handling enable this
 }
 
