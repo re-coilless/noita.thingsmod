@@ -39,6 +39,23 @@ local cats = {
     },
 }
 
+if DebugGetIsDevBuild() then
+    local function fixup_jpeg_crash(func_name, file_argn)
+        local orig = _G[func_name]
+        _G[func_name] = function(...)
+            local args = {...}
+            local ext = args[file_argn]:sub(-4)
+            if ext == ".jpg" or ext == "jpeg" then
+                args[file_argn] = "mods/noita.thingsmod/content/good_book_of_cats/gfx/noita_dev.png"
+            end
+            return orig(unpack(args))
+        end
+    end
+
+    fixup_jpeg_crash("GuiGetImageDimensions", 2)
+    fixup_jpeg_crash("GuiImage", 5)
+end
+
 function M.OnModInit()
     gui = GuiCreate()
 end
