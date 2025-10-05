@@ -10,7 +10,7 @@ local gui
 
 local cats = {
     {
-        img = "mods/noita.thingsmod/cats/skittle.jpg",
+        img = "mods/noita.thingsmod/cats/skittle.png",
         name = "Skittle"
     },
     {
@@ -18,19 +18,19 @@ local cats = {
         name = "Evil Beast",
     },
     {
-        img = "mods/noita.thingsmod/cats/alesx_droolemoji.jpg",
+        img = "mods/noita.thingsmod/cats/alesx_droolemoji.png",
         name = "Alex",
     },
     {
-        img = "mods/noita.thingsmod/cats/james.jpg",
+        img = "mods/noita.thingsmod/cats/james.png",
         name = "James",
     },
     {
-        img = "mods/noita.thingsmod/cats/monty.jpg",
+        img = "mods/noita.thingsmod/cats/monty.png",
         name = "Monty",
     },
     {
-        img = "mods/noita.thingsmod/cats/roger.jpg",
+        img = "mods/noita.thingsmod/cats/roger.png",
         name = "Roger",
     },
     {
