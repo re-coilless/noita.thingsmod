@@ -1,7 +1,7 @@
 -- This is ported from a 4 year old abandoned mod project, i have no idea how robust it is.
 synergies = {
 	-- Example:
-	{
+	--[[{
 		id = "lightning_synergy", -- The ID of the synergy, has to be unique.
 		use_synergy_points = false, -- Use synergy point system, combines perks and spells into a single value.
 		points_required = 0, -- Part of the synergy point system, if the total points are higher than this the synergy will be active.
@@ -40,5 +40,5 @@ synergies = {
 		func_removed = function(entity_id, x, y, synergy) -- The function that will be ran when the synergy is disabled.
             GamePrint("You lost a lightning synergy!")
 		end
-    },
+    },]]
 }
