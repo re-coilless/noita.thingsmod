@@ -184,7 +184,7 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
             xM.cat_book_state[ info.id ] = not( is_reading )
         end
 
-        pen.new_shadowed_text( pic_x + size_x - icon_w, pic_y + d.edging - 1, pic_z, readme, { is_right_x = true,
+        pen.new_shadowed_text( pic_x + size_x - icon_w - 7, pic_y + d.edging - 1, pic_z, readme, { is_right_x = true,
             fully_featured = true, alpha = inter_alpha, color = pen.PALETTE.VNL[ is_hovered and "YELLOW" or ( is_reading and "RED" or "RUNIC" )]})
         
         if( is_reading ) then
@@ -228,22 +228,52 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
                 pen.new_image( book_x + 163, book_y + 20, pic_z - 0.1, "mods/noita.thingsmod/content/index_compendium/files/cats/disclaimer.png" )
                 pen.new_text( book_x + 200, book_y + 100, pic_z - 0.1, "While all of the photos are of the real animals, not all specie names are attributed properly. It is incredibly hard to source good pictures, and some genera don't even have a common name.", { dims = { 75, -1 }, is_centered = true, color = pen.PALETTE.SHADOW })
             else
-                pen.new_image( book_x + 18, book_y + 16, pic_z - 0.2,
-                    "mods/noita.thingsmod/content/index_compendium/files/cats/frame.png" )
-                pen.new_image( book_x + 143, book_y + 16, pic_z - 0.2,
-                    "mods/noita.thingsmod/content/index_compendium/files/cats/frame.png" )
-                pen.new_image( book_x + 19, book_y + 17, pic_z - 0.1,
-                    "mods/noita.thingsmod/cats/"..( is_kat and "real_kats/k" or "real_cats/c" )..page..".png", { s_x = 0.5, s_y = 0.5 })
-                pen.new_image( book_x + 144, book_y + 17, pic_z - 0.1,
-                    "mods/noita.thingsmod/cats/"..( is_kat and "real_kats/k" or "real_cats/c" )..page.."_.png", { s_x = 0.5, s_y = 0.5 })
-                
                 local names = book_data[ page ]
                 pen.new_text( book_x + 73, book_y + 130, pic_z - 0.1,
-                    "{>underscore>{"..names.name.."}<underscore<}", { fully_featured = true, color = pen.PALETTE.SHADOW, is_centered = true })
+                    "{>underscore>{{-}|VNL|RUNIC|FORCED|{-}"..names.name.."}<underscore<}",
+                    { fully_featured = true, color = pen.PALETTE.SHADOW, is_centered = true })
                 pen.new_text( book_x + 73, book_y + 143, pic_z - 0.1, names.specie, { color = {179,160,132}, is_centered = true })
                 pen.new_text( book_x + 73, book_y + 152, pic_z - 0.1, names.science, { color = {225,211,183}, is_centered = true })
 
-                --pet counter that is stored in the settings (squishing anim for both forms, heart particles, hollow knight caterpillar sounds)
+                local pets_data = pen.t.parse( pen.setting_get( "noita.thingsmod.index_compendium.pets" )) or {}
+                local pets = ( pets_data[ is_kat and "k" or "c" ] or {})[ page ] or 0
+                local got_pets = false
+                
+                local frames, s_x, s_y = 15, 0, 0
+                local timer = pen.atimer( info.id.."_pets", frames, nil, true )
+                local anim = 0.05*( 1 - pen.animate( 1, timer, { ease_int = "hill", params_int = 0.1, frames = frames }))
+                
+                _,_,is_hovered = pen.new_image( book_x + 18, book_y + 16, pic_z - 0.2,
+                    "mods/noita.thingsmod/content/index_compendium/files/cats/frame.png", { can_click = true })
+                local l_anim = is_hovered and anim or 0; s_x, s_y = 0.5 - l_anim/5, 0.5 - l_anim
+                pen.new_image( book_x + 73 - 108*s_x, book_y + 125 - 216*s_y, pic_z - 0.1,
+                    "mods/noita.thingsmod/cats/"..( is_kat and "real_kats/k" or "real_cats/c" )..page..".png", { s_x = s_x, s_y = s_y })
+                if( is_hovered ) then
+                    pen.new_image( book_x + 10, book_y + 8, pic_z - 0.3,
+                        "mods/noita.thingsmod/content/index_compendium/files/cats/pet"..math.ceil( 5*timer/frames )..".png" )
+                    if( InputIsMouseButtonDown( 1 )) then got_pets = true end
+                end
+                _,_,is_hovered = pen.new_image( book_x + 143, book_y + 16, pic_z - 0.2,
+                    "mods/noita.thingsmod/content/index_compendium/files/cats/frame.png", { can_click = true })
+                local r_anim = is_hovered and anim or 0; s_x, s_y = 0.5 - r_anim/5, 0.5 - r_anim
+                pen.new_image( book_x + 198 - 108*s_x, book_y + 125 - 216*s_y, pic_z - 0.1,
+                    "mods/noita.thingsmod/cats/"..( is_kat and "real_kats/k" or "real_cats/c" )..page.."_.png", { s_x = s_x, s_y = s_y })
+                if( is_hovered ) then
+                    pen.new_image( book_x + 135, book_y + 8, pic_z - 0.3,
+                        "mods/noita.thingsmod/content/index_compendium/files/cats/pet"..math.ceil( 5*timer/frames )..".png" )
+                    if( InputIsMouseButtonDown( 1 )) then got_pets = true end
+                end
+
+                if( got_pets and timer == frames ) then
+                    pets_data[ is_kat and "k" or "c" ] = pets_data[ is_kat and "k" or "c" ] or {}
+                    pets_data[ is_kat and "k" or "c" ][ page ] = pets + 1
+                    pen.setting_set( "noita.thingsmod.index_compendium.pets", pen.t.parse( pets_data ))
+                    pen.atimer( info.id.."_pets", nil, true )
+                    --petting heart particles, hollow knight caterpillar sounds
+                end
+
+                pen.new_text( book_x + 143, book_y + 160, pic_z - 0.1, "Times Petted: "..pets, { color = {179,160,132}})
+
                 --[READ MORE] under the adult side that replaces that entire side with text
                 --page flipping sound
             end

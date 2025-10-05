@@ -12,9 +12,11 @@ local M = {
 	OnModInit = function()
 		pen.hallway( function()
 			--if( disabled_modules[ "good_book_of_cats" ]) then return end
+			
 			--Katydid pic: https://fieldsofmistria.wiki.gg/wiki/Singing_Katydid
 			--Caterpillar pic: https://fieldsofmistria.wiki.gg/wiki/Inchworm
 			--Book UI: https://www.deviantart.com/thisguy1045/art/Minecraft-Mod-Book-GUI-346997700
+			--Extra Book UI: https://www.curseforge.com/minecraft/mc-mods/exposure
 
 			local book_markers = { "<Entity name=\"cat_book\">", "\"\n.-></ItemComponent>" }
 			local book_path = "mods/noita.thingsmod/content/good_book_of_cats/entities/book.xml"
