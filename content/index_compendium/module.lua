@@ -19,12 +19,16 @@ local M = {
 			local book_markers = { "<Entity name=\"cat_book\">", "\"\n.-></ItemComponent>" }
 			local book_path = "mods/noita.thingsmod/content/good_book_of_cats/entities/book.xml"
 			local book_file = string.gsub( pen.magic_read( book_path ), book_markers[1], "<Entity name=\"cat_book\" tags=\"forgeable\">" )
-			book_file = string.gsub( book_file, book_markers[2], "You feel like throwing it into a forge... \"\n   ></ItemComponent>" )
+			book_file = string.gsub( book_file, book_markers[2], "You feel like putting it into a forge... \"\n   ></ItemComponent>" )
 			pen.magic_write( book_path, book_file )
 
 			local pic_marker = "mods/noita%.thingsmod/content/good_book_of_cats/gfx/book%.png"
 			book_file = string.gsub( book_file, pic_marker, "mods/noita.thingsmod/content/index_compendium/files/cats/item_K.png" )
 			pen.magic_write( "mods/noita.thingsmod/content/index_compendium/files/cats/item_K.xml", book_file )
+
+			pic_marker = "mods/noita%.thingsmod/content/index_compendium/files/cats/item_K%.png"
+			book_file = string.gsub( book_file, pic_marker, "mods/noita.thingsmod/content/index_compendium/files/cats/item_C.png" )
+			pen.magic_write( "mods/noita.thingsmod/content/index_compendium/files/cats/item_C.xml", book_file )
 
 			local forge_marker = "\nif converted then"
 			local forge_path = "data/scripts/buildings/forge_item_convert.lua"
@@ -33,10 +37,7 @@ local M = {
 				local cats = EntityGetWithName( "cat_book" ) or 0
 				if( cats > 0 ) then
 					local id = cats
-					local is_free = EntityGetRootEntity( id ) == id
-					local shape_file = ComponentGetValue2( EntityGetFirstComponentIncludingDisabled( id, "PhysicsImageShapeComponent" ), "image_file" )
-					local is_cats = shape_file == "mods/noita.thingsmod/content/good_book_of_cats/gfx/book.png"
-					if( is_free and is_cats ) then
+					if( EntityGetRootEntity( id ) == id ) then
 						local x,y = EntityGetTransform( id )
 						local new_id = EntityLoad( "mods/noita.thingsmod/content/index_compendium/files/cats/item_K.xml", x, y )
 						EntityKill( id )
@@ -44,7 +45,6 @@ local M = {
 						local info_comp = EntityGetFirstComponentIncludingDisabled( new_id, "UIInfoComponent" )
 						local abil_comp = EntityGetFirstComponentIncludingDisabled( new_id, "AbilityComponent" )
 						local item_comp = EntityGetFirstComponentIncludingDisabled( new_id, "ItemComponent" )
-						local pic_comp = EntityGetFirstComponentIncludingDisabled( new_id, "SpriteComponent" )
 						local lua_comp = EntityGetFirstComponentIncludingDisabled( new_id, "LuaComponent" )
 						
 						local name = "The Good Book of Kats"
@@ -55,36 +55,63 @@ local M = {
 
 						EntityRemoveComponent( new_id, lua_comp )
 						EntityRemoveTag( new_id, "forgeable" )
+						EntitySetName( new_id, "kat_book" )
 
 						EntityAddComponent2( new_id, "VariableStorageComponent", {
 							name = "on_tooltip",
 							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/tip.lua",
+						})
+						EntityAddComponent2( new_id, "VariableStorageComponent", {
+							name = "on_slot",
+							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/slot.lua",
+						})
+
+						converted = true
+					end
+				end
+				
+				local kats = EntityGetWithName( "kat_book" ) or 0
+				if( kats > 0 ) then
+					local id = kats
+					local was_used = ComponentGetValue2( EntityGetFirstComponentIncludingDisabled( id, "ItemComponent" ), "has_been_picked_by_player" )
+					if( EntityGetRootEntity( id ) == id and was_used ) then
+						local x,y = EntityGetTransform( id )
+						local new_id = EntityLoad( "mods/noita.thingsmod/content/index_compendium/files/cats/item_C.xml", x, y )
+						EntityKill( id )
+
+						local info_comp = EntityGetFirstComponentIncludingDisabled( new_id, "UIInfoComponent" )
+						local abil_comp = EntityGetFirstComponentIncludingDisabled( new_id, "AbilityComponent" )
+						local item_comp = EntityGetFirstComponentIncludingDisabled( new_id, "ItemComponent" )
+						local lua_comp = EntityGetFirstComponentIncludingDisabled( new_id, "LuaComponent" )
+						
+						local name = "The Best Book of Cats"
+						ComponentSetValue2( info_comp, "name", name )
+						ComponentSetValue2( abil_comp, "ui_name", name )
+						ComponentSetValue2( item_comp, "item_name", name )
+						ComponentSetValue2( item_comp, "ui_description", "A book containing pictures of cats. So very precious." )
+
+						EntityRemoveComponent( new_id, lua_comp )
+						EntityRemoveTag( new_id, "forgeable" )
+						EntitySetName( new_id, "cat_book2" )
+
+						EntityAddComponent2( new_id, "VariableStorageComponent", {
+							name = "on_tooltip",
+							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/tip.lua",
+						})
+						EntityAddComponent2( new_id, "VariableStorageComponent", {
+							name = "on_slot",
+							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/slot.lua",
 						})
 
 						converted = true
 					end
 				end]]..forge_marker )
 			pen.magic_write( forge_path, forge_file )
-
-			--GBK + Tablet -> BBC
-			--BBC gets converted only after the Kat book has been picked by player
-			--add on_slot script to kat book that searches for tablets in inventory (normal_tablet) and then gives itself forgeable tag
-			
-			--The Best Book of Cats "A book containing pictures of cats. So very precious."
-			--disclaimer that not all photos are accurate (some species are incredibly hard to source good pictures of in both forms)
-			--pet counter that is stored in the settings
-			--page flipping sound
 		end)
 
 		pen.hallway( function()
 			if( not( ModIsEnabled( "spoopy_inv" ))) then return end
 		end)
-	end,
-
-	OnPlayerSpawned = function( hooman )
-		local x, y = EntityGetTransform( hooman )
-		EntityLoad( "data/entities/buildings/forge_item_check.xml", x + 10, y )
-		EntityLoad( "data/entities/items/books/book_00.xml", x - 50, y )
 	end,
 }
 

@@ -1,7 +1,3 @@
-function enabled_changed(entity_id, enabled)
-        (enabled and GameAddFlagRun or GameRemoveFlagRun)("NOITA_THINGSMOD_CAT_BOOK_HELD")
-end
-
 function too_damaged(entity)
     local phys = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBodyComponent")
     if not phys then

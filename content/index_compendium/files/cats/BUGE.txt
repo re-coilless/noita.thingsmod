@@ -1,3 +1,29 @@
++1) Coralline - Pink Kat - Amblycorypha Oblongifolia
+
++2) Jade - Blue-legged Sylvan Katydid - Zabalius ophthalmicus
+
++3) Felicia - False Leaf Katydid - Pseudophyllus Titan
+
++4) Lysander - Candycane Cricket - Harroweria sp.
+
++5) Groover - Stick Grasshopper - Proscopiidae Iquitos
+
++6) Argyle - Cave Cricket - Tachycines Aynamorus
+
++7) Virgil - Mole Cricket - Neoscapteriscus Borellii
+
++8) Rook - Dragon Head Cricket - Cosmoderus Femoralis
+
++9) Vess - Dune Cricket - Schizodactylus Monstrosus
+
++10) Grimalkin - Spiny Devil Katydid - Panacanthus Cuspidatus
+
++11) Cecil - Armored Bush Cricket - Acanthoplus Discoidalis
+
++12) Orion - Giant Weta - Deinacrida Heteracantha
+
+***********************************************
+
 +1) Reginald - Cecropia - Hyalophora Cecropia
 
 +2) Silas - Polyphemus - Antheraea Polyphemus
@@ -34,32 +60,6 @@
 
 +18) Silvester - Great Purple Emperor - Sasakia Charonda
 
-+19) Jasmine - Bagworm - Psychidae
++19) Jasmine - Bagworm - Psychidae sp.
 
 +20) Percival - Sawfly - Trichiosoma Vitellina
-
-***************************************************************
-
-+1) Coralline - Pink Kat - Amblycorypha Oblongifolia
-
-+2) Jade - Blue-legged Sylvan Katydid - Zabalius ophthalmicus
-
-+3) Felicia - False Leaf Katydid - Pseudophyllus Titan
-
-+4) Lysander - Candycane Cricket - Harroweria sp.
-
-+5) Groover - Stick Grasshopper - Proscopiidae Iquitos
-
-+6) Argyle - Cave Cricket - Tachycines Aynamorus
-
-+7) Virgil - Mole Cricket - Neoscapteriscus Borellii
-
-+8) Rook - Dragon Head Cricket - Cosmoderus Femoralis
-
-+9) Vess - Dune Cricket - Schizodactylus Monstrosus
-
-+10) Grimalkin - Spiny Devil Katydid - Panacanthus Cuspidatus
-
-+11) Cecil - Armored Bush Cricket - Acanthoplus Discoidalis
-
-+12) Orion - Giant Weta - Deinacrida Heteracantha
