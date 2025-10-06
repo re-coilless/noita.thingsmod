@@ -16,7 +16,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
     local entity_id = GetUpdatedEntityID()
 
     local ndmg = damage
-    if tonumber(GlobalsGetValue( "NOITA_THINGSMOD_WET_ARMOR_COUNT", "0" )) > 0 and damage > 0 then
+    if tonumber(GlobalsGetValue( "PERK_PICKED_NOITA_THINGSMOD_WET_ARMOR_PICKUP_COUNT", "0" )) > 0 and damage > 0 then
         StainIDs = StainIDs or BuildStainIDs()
         local statuscomp = EntityGetFirstComponentIncludingDisabled(entity_id, "StatusEffectDataComponent")
         local stains = ComponentGetValue2(statuscomp, "stain_effects")
@@ -27,7 +27,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
             end
         end
 
-        stain_count = stain_count + (tonumber(GlobalsGetValue( "NOITA_THINGSMOD_WET_ARMOR_COUNT", "0" )) - 1)
+        stain_count = stain_count + (tonumber(GlobalsGetValue( "PERK_PICKED_NOITA_THINGSMOD_WET_ARMOR_PICKUP_COUNT", "0" )) - 1)
     
         local hitboxcomps = EntityGetComponentIncludingDisabled(entity_id,"HitboxComponent")
         ndmg = (ndmg * math.min(1/(2^stain_count),1))
@@ -38,7 +38,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
         --print(table.concat({"stain_count is ",stain_count}))
     end
 
-    if tonumber(GlobalsGetValue( "NOITA_THINGSMOD_NOHIT_CRITS_COUNT", "0" )) > 0 and damage > 0 then
+    if tonumber(GlobalsGetValue( "PERK_PICKED_NOITA_THINGSMOD_NOHIT_CRITS_PICKUP_COUNT", "0" )) > 0 and damage > 0 then
         local children = EntityGetAllChildren(entity_id)
         local found = false
         for k=1,#children do
