@@ -23,8 +23,6 @@ local custom_perks = {
 		usable_by_enemies = false,
 		author = "Conga Lyne",
 		func = function( entity_perk_item, entity_who_picked, item_name )
-			GlobalsSetValue("PERK_PICKED_NOITA_THINGSMOD_NOHIT_CRITS_PICKUP_COUNT",tostring(tonumber(GlobalsGetValue("PERK_PICKED_NOITA_THINGSMOD_NOHIT_CRITS_PICKUP_COUNT","0")) + 1))
-
 			local x,y = EntityGetTransform( entity_who_picked )
 			local child_id = EntityLoad( "mods/noita.thingsmod/content/simple_perks/entities/misc/perks/nohit_crits.xml", x, y )
 			EntityAddTag( child_id, "perk_entity" )
@@ -37,7 +35,6 @@ local custom_perks = {
 					EntityKill ( v )
 				end
 			end
-			GlobalsSetValue("PERK_PICKED_NOITA_THINGSMOD_NOHIT_CRITS_PICKUP_COUNT","0")
 		end,
 	},
 	{
