@@ -15,6 +15,7 @@ local active_skins, active_overlays, active_capes = {}, {}, {}
 local original_sprite, original_arm, original_cape_color, original_cape_color_edge
 
 M.OnMagicNumbersAndWorldSeedInitialized = function()
+	ModLuaFileAppend("data/scripts/gun/gun_extra_modifiers.lua", "mods/noita.thingsmod/content/synergies/scripts/extra_modifiers.lua")
 	for _, s in pairs(synergies) do
 		local base = "mods/synergies/files/" .. s.id
 		s._replacement_xml = base .. "_replacement.xml"
@@ -240,7 +241,7 @@ M.OnWorldPreUpdate = function()
 			if active then
 				if s.use_synergy_points then
 					if (pc * s.perk_value) + (sc * s.spelll_value) < s.points_required then
-						s.func_removed(player, px, py, s)
+						s:func_removed(player, px, py)
 						GameRemoveFlagRun("synergy_" .. s.id)
 						for i = #active_skins, 1, -1 do if active_skins[i].s == s then table.remove(active_skins, i) end end
 						for i = #active_capes, 1, -1 do if active_capes[i].s == s then table.remove(active_capes, i) end end
@@ -249,7 +250,7 @@ M.OnWorldPreUpdate = function()
 					end
 				else
 					if pc < (rp and rp.min_count or 0) or sc < (rs and rs.min_count or 0) then
-						s.func_removed(player, px, py, s)
+						s:func_removed(player, px, py)
 						GameRemoveFlagRun("synergy_" .. s.id)
 						for i = #active_skins, 1, -1 do if active_skins[i].s == s then table.remove(active_skins, i) end end
 						for i = #active_capes, 1, -1 do if active_capes[i].s == s then table.remove(active_capes, i) end end
@@ -260,7 +261,7 @@ M.OnWorldPreUpdate = function()
 			else
 				if s.use_synergy_points then
 					if (pc * s.perk_value) + (sc * s.spelll_value) < s.points_required then
-						s.func_added(player, px, py, s)
+						s:func_added(player, px, py)
 						GameAddFlagRun("synergy_" .. s.id)
 						if s.skin_replacement ~= nil then
 							for _, v in pairs(active_skins) do v.active = false end
@@ -277,7 +278,7 @@ M.OnWorldPreUpdate = function()
 					end
 				else
 					if pc >= (rp and rp.min_count or 0) and sc >= (rs and rs.min_count or 0) then
-						s.func_added(player, px, py, s)
+						s:func_added(player, px, py)
 						GameAddFlagRun("synergy_" .. s.id)
 						if s.skin_replacement ~= nil then
 							for _, v in pairs(active_skins) do v.active = false end
