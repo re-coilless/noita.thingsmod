@@ -11,10 +11,8 @@ local custom_perks = {
 		usable_by_enemies = false,
 		author = "Conga Lyne",
 		func = function( entity_perk_item, entity_who_picked, item_name )
-			GlobalsSetValue("NOITA_THINGSMOD_WET_ARMOR_COUNT",tostring(tonumber(GlobalsGetValue("NOITA_THINGSMOD_WET_ARMOR_COUNT","0")) + 1))
-		end,
-		func_remove = function( entity_id )
-			GlobalsSetValue("NOITA_THINGSMOD_WET_ARMOR_COUNT","0")
+			--yeah
+			--This perk is handled by scripts/perks/take_damage.lua
 		end,
 	},
 	{
@@ -25,8 +23,6 @@ local custom_perks = {
 		usable_by_enemies = false,
 		author = "Conga Lyne",
 		func = function( entity_perk_item, entity_who_picked, item_name )
-			GlobalsSetValue("NOITA_THINGSMOD_NOHIT_CRITS_COUNT",tostring(tonumber(GlobalsGetValue("NOITA_THINGSMOD_NOHIT_CRITS_COUNT","0")) + 1))
-
 			local x,y = EntityGetTransform( entity_who_picked )
 			local child_id = EntityLoad( "mods/noita.thingsmod/content/simple_perks/entities/misc/perks/nohit_crits.xml", x, y )
 			EntityAddTag( child_id, "perk_entity" )
@@ -39,7 +35,6 @@ local custom_perks = {
 					EntityKill ( v )
 				end
 			end
-			GlobalsSetValue("NOITA_THINGSMOD_NOHIT_CRITS_COUNT","0")
 		end,
 	},
 	{
