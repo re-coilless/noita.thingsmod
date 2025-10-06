@@ -34,11 +34,42 @@ synergies = {
         skin_replacement = "mods/noita.thingsmod/content/synergies/gfx/ukkomina.png", -- A spritesheet that will replace the player sprite when this synergy is enabled.
         skin_arm = "mods/noita.thingsmod/content/synergies/gfx/ukkoarm.png", -- The arm spritesheet that the player's arm will be changed to when this synergy is active.
         skin_overlay = nil, -- A overlay sprite, can be used instead of a complete skin replacement.
-		func_added = function(entity_id, x, y, synergy) -- The function that will be ran when the synergy is enabled.
+		func_added = function(self, entity_id, x, y) -- The function that will be ran when the synergy is enabled.
             GamePrint("You got a lightning synergy!")
 		end,
-		func_removed = function(entity_id, x, y, synergy) -- The function that will be ran when the synergy is disabled.
+		func_removed = function(self, entity_id, x, y) -- The function that will be ran when the synergy is disabled.
             GamePrint("You lost a lightning synergy!")
 		end
     },]]
+	{
+		id = "frost_blast",
+		use_synergy_points = false,
+        required_perks = {
+			min_count = 3, 
+			count_duplicates = false, 
+            list = { 
+                "GLASS_CANNON",
+                "FREEZE_FIELD",
+				"CRITICAL_HIT"
+            }
+        },
+		func_added = function(self, entity_id, x, y)
+			EntityAddComponent( entity_id, "ShotEffectComponent", 
+			{
+				_tags = "perk_component",
+				extra_modifier = "frost_blast",
+			} )
+		end,
+		func_removed = function(self, entity_id, x, y)
+			local comps = EntityGetComponent( entity_id, "ShotEffectComponent", "perk_component" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs(comps) do
+					local em = ComponentGetValue2( comp, "extra_modifier" )
+					if( em == "frost_blast" ) then
+						EntityRemoveComponent( entity_id, comp )
+					end
+				end
+			end
+		end
+    },
 }
