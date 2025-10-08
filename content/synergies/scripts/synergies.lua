@@ -1,7 +1,7 @@
 -- This is ported from a 4 year old abandoned mod project, i have no idea how robust it is.
 synergies = {
 	-- Example:
-	--[[{
+	{
 		id = "lightning_synergy", -- The ID of the synergy, has to be unique.
 		use_synergy_points = false, -- Use synergy point system, combines perks and spells into a single value.
 		points_required = 0, -- Part of the synergy point system, if the total points are higher than this the synergy will be active.
@@ -35,12 +35,12 @@ synergies = {
         skin_arm = "mods/noita.thingsmod/content/synergies/gfx/ukkoarm.png", -- The arm spritesheet that the player's arm will be changed to when this synergy is active.
         skin_overlay = nil, -- A overlay sprite, can be used instead of a complete skin replacement.
 		func_added = function(self, entity_id, x, y) -- The function that will be ran when the synergy is enabled.
-            GamePrint("You got a lightning synergy!")
+			AddShotEffect(entity_id, "ukulele")
 		end,
 		func_removed = function(self, entity_id, x, y) -- The function that will be ran when the synergy is disabled.
-            GamePrint("You lost a lightning synergy!")
+			RemoveShotEffect(entity_id, "ukulele")
 		end
-    },]]
+    },
 	{
 		id = "frost_blast",
 		use_synergy_points = false,
@@ -54,22 +54,10 @@ synergies = {
             }
         },
 		func_added = function(self, entity_id, x, y)
-			EntityAddComponent( entity_id, "ShotEffectComponent", 
-			{
-				_tags = "perk_component",
-				extra_modifier = "frost_blast",
-			} )
+			AddShotEffect(entity_id, "frost_blast")
 		end,
 		func_removed = function(self, entity_id, x, y)
-			local comps = EntityGetComponent( entity_id, "ShotEffectComponent", "perk_component" )
-			if( comps ~= nil ) then
-				for i,comp in ipairs(comps) do
-					local em = ComponentGetValue2( comp, "extra_modifier" )
-					if( em == "frost_blast" ) then
-						EntityRemoveComponent( entity_id, comp )
-					end
-				end
-			end
+			RemoveShotEffect(entity_id, "frost_blast")
 		end
     },
 }

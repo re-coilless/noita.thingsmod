@@ -7,6 +7,7 @@ local M = {
 	authors = { "Evaisa" },
 }
 
+dofile_once("mods/noita.thingsmod/content/synergies/scripts/utils/utilities.lua")
 local placeholders = dofile("mods/noita.thingsmod/content/synergies/scripts/placeholders.lua")
 dofile("mods/noita.thingsmod/content/synergies/scripts/synergies.lua")
 dofile("data/scripts/perks/perk_list.lua")

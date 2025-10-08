@@ -1,0 +1,12 @@
+<Entity>
+
+    <LuaComponent 
+        _enabled="1" 
+        script_damage_received="mods/noita.thingsmod/content/synergies/scripts/effects/ukulele_check_entity.lua"
+        remove_after_executed="1"
+        >
+   </LuaComponent>
+
+   
+</Entity>
+
