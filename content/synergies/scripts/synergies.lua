@@ -60,4 +60,23 @@ synergies = {
 			RemoveShotEffect(entity_id, "frost_blast")
 		end
     },
+	{
+		id = "revenge_lightning",
+		use_synergy_points = false,
+        required_perks = {
+			min_count = 3, 
+			count_duplicates = false, 
+            list = { 
+                "PROTECTION_ELECTRICITY",
+                "ELECTRICITY",
+				"REVENGE_BULLET"
+            }
+        },
+		func_added = function(self, entity_id, x, y)
+			AddLuaDamageReceivedComponent(entity_id, "mods/noita.thingsmod/content/synergies/scripts/effects/lightning_thrower.lua")
+		end,
+		func_removed = function(self, entity_id, x, y)
+			RemoveLuaDamageReceivedComponent(entity_id, "mods/noita.thingsmod/content/synergies/scripts/effects/lightning_thrower.lua")
+		end
+    },
 }
