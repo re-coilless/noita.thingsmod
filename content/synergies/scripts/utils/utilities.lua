@@ -41,3 +41,43 @@ function RemoveShotEffect(entity_id, effect)
 		end
 	end
 end
+
+function AddLuaFrameComponent(entity_id, script, execute_every_n_frame)
+	EntityAddComponent( entity_id, "LuaComponent", {
+		script_source_file=script,
+		execute_every_n_frame=execute_every_n_frame
+	} )
+end
+
+function RemoveLuaFrameComponent(entity_id, script)
+	local comps = EntityGetComponent( entity_id, "LuaComponent" )
+	if( comps ~= nil ) then
+		for i,comp in ipairs( comps ) do
+			local s = ComponentGetValue( comp, "script_source_file" )
+			if( s == script ) then
+				EntityRemoveComponent( entity_id, comp )
+				break;
+			end
+		end
+	end
+end
+
+function AddLuaDamageReceivedComponent(entity_id, script)
+	EntityAddComponent( entity_id, "LuaComponent", {
+		script_damage_received=script,
+		execute_every_n_frame=-1
+	} )
+end
+
+function RemoveLuaDamageReceivedComponent(entity_id, script)
+	local comps = EntityGetComponent( entity_id, "LuaComponent" )
+	if( comps ~= nil ) then
+		for i,comp in ipairs( comps ) do
+			local s = ComponentGetValue( comp, "script_damage_received" )
+			if( s == script ) then
+				EntityRemoveComponent( entity_id, comp )
+				break;
+			end
+		end
+	end
+end
