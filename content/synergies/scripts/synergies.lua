@@ -79,4 +79,79 @@ synergies = {
 			RemoveLuaDamageReceivedComponent(entity_id, "mods/noita.thingsmod/content/synergies/scripts/effects/lightning_thrower.lua")
 		end
     },
+	{
+		id = "friendly_shields",
+		use_synergy_points = false,
+        required_perks = {
+			min_count = 1, 
+			count_duplicates = false, 
+            list = { 
+                "SHIELD"
+            }
+        },
+		required_spells = {
+			min_count = 1,
+			count_duplicates = false,
+            list = {
+                "SHIELD_FIELD",
+				"ENERGY_SHIELD",
+				"ENERGY_SHIELD_SECTOR",
+				"ENERGY_SHIELD_SHOT",
+            }
+		},
+		func_added = function(self, entity_id, x, y)
+			AddLuaFrameComponent(entity_id, "mods/noita.thingsmod/content/synergies/scripts/effects/friendly_shields.lua", 30)
+		end,
+		func_removed = function(self, entity_id, x, y)
+			RemoveLuaFrameComponent(entity_id, "mods/noita.thingsmod/content/synergies/scripts/effects/friendly_shields.lua")
+		end
+	},
+	{
+		id = "ricochet",
+		use_synergy_points = false,
+        required_perks = {
+			min_count = 3, 
+			count_duplicates = false, 
+            list = { 
+                "BOUNCE",
+                "LASER_AIM",
+				"FAST_PROJECTILES"
+            }
+        },
+		func_added = function(self, entity_id, x, y)
+			AddShotEffect(entity_id, "ricochet")
+		end,
+		func_removed = function(self, entity_id, x, y)
+			RemoveShotEffect(entity_id, "ricochet")
+		end
+    },
+	{ -- Pretty lame but couldn't think of anything better
+		id = "lukki_queen",
+		use_synergy_points = false,
+        required_perks = {
+			min_count = 3, 
+			count_duplicates = true, 
+            list = { 
+                {"ATTACK_FOOT", require_count=2},
+                {"LUKKI_MINION", require_count=1},
+            }
+        },
+		func_added = function(self, entity_id, x, y)
+			EntityAddComponent( entity_id, "CellEaterComponent", 
+			{
+				_tags = "perk_component",
+				radius="13",
+				eat_probability="15"
+			} )
+		end,
+		func_removed = function(self, entity_id, x, y)
+			local comps = EntityGetComponent( entity_id, "CellEaterComponent", "perk_component" )
+			if( comps ~= nil ) then
+				for i,comp in ipairs(comps) do
+					EntityRemoveComponent( entity_id, comp )
+				end
+			end
+		end
+	},
+	
 }

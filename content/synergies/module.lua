@@ -219,7 +219,7 @@ M.OnWorldPreUpdate = function()
 			local id = perk.id
 			if GameHasFlagRun("PERK_PICKED_" .. id) then
 				perk_once[id] = 1
-				local k = tostring(GlobalsGetValue("PERK_PICKED_" .. id) .. "_PICKUP_COUNT")
+				local k = GlobalsGetValue("PERK_PICKED_" .. id .. "_PICKUP_COUNT", "1")
 				perk_count[id] = tonumber(k, 10) or 1
 			end
 		end
@@ -227,21 +227,52 @@ M.OnWorldPreUpdate = function()
 		for _, s in pairs(synergies) do
 			local pc, sc = 0, 0
 			local rp, rs = s.required_perks, s.required_spells
+			local pr_ok, sr_ok = true, true
+
 			if rp and rp.count_duplicates then
-				for _, id in pairs(rp.list or {}) do pc = pc + (perk_count[id] or 0) end
+				for _, e in pairs(rp.list or {}) do
+					local id = (type(e) == "table") and (e[1] or e.id) or e
+					local req = (type(e) == "table") and (e.require_count or nil) or nil
+					local have = perk_count[id] or 0
+					pc = pc + have
+					if req ~= nil and have < req then pr_ok = false end
+				end
 			else
-				for _, id in pairs((rp and rp.list) or {}) do pc = pc + (perk_once[id] or 0) end
+				for _, e in pairs((rp and rp.list) or {}) do
+					local id = (type(e) == "table") and (e[1] or e.id) or e
+					local req = (type(e) == "table") and (e.require_count or nil) or nil
+					local have = (perk_once[id] or 0) > 0 and 1 or 0
+					pc = pc + have
+					if req ~= nil then
+						if req > 1 then pr_ok = false else if have < 1 then pr_ok = false end end
+					end
+				end
 			end
+
 			if rs and rs.count_duplicates then
-				for _, id in pairs(rs.list or {}) do sc = sc + (spell_count_by_id[id] or 0) end
+				for _, e in pairs(rs.list or {}) do
+					local id = (type(e) == "table") and (e[1] or e.id) or e
+					local req = (type(e) == "table") and (e.require_count or nil) or nil
+					local have = spell_count_by_id[id] or 0
+					sc = sc + have
+					if req ~= nil and have < req then sr_ok = false end
+				end
 			else
-				for _, id in pairs((rs and rs.list) or {}) do sc = sc + (spell_seen[id] and 1 or 0) end
+				for _, e in pairs((rs and rs.list) or {}) do
+					local id = (type(e) == "table") and (e[1] or e.id) or e
+					local req = (type(e) == "table") and (e.require_count or nil) or nil
+					local have = spell_seen[id] and 1 or 0
+					sc = sc + have
+					if req ~= nil then
+						if req > 1 then sr_ok = false else if have < 1 then sr_ok = false end end
+					end
+				end
 			end
 
 			local active = GameHasFlagRun("synergy_" .. s.id)
 			if active then
 				if s.use_synergy_points then
-					if (pc * s.perk_value) + (sc * s.spelll_value) < s.points_required then
+					if (pc * s.perk_value) + (sc * s.spell_value) < s.points_required then
 						s:func_removed(player, px, py)
 						GameRemoveFlagRun("synergy_" .. s.id)
 						for i = #active_skins, 1, -1 do if active_skins[i].s == s then table.remove(active_skins, i) end end
@@ -250,7 +281,7 @@ M.OnWorldPreUpdate = function()
 						GameAddFlagRun("outfit_changed")
 					end
 				else
-					if pc < (rp and rp.min_count or 0) or sc < (rs and rs.min_count or 0) then
+					if pc < (rp and rp.min_count or 0) or sc < (rs and rs.min_count or 0) or (rp and not pr_ok) or (rs and not sr_ok) then
 						s:func_removed(player, px, py)
 						GameRemoveFlagRun("synergy_" .. s.id)
 						for i = #active_skins, 1, -1 do if active_skins[i].s == s then table.remove(active_skins, i) end end
@@ -261,7 +292,8 @@ M.OnWorldPreUpdate = function()
 				end
 			else
 				if s.use_synergy_points then
-					if (pc * s.perk_value) + (sc * s.spelll_value) < s.points_required then
+					if (pc * s.perk_value) + (sc * s.spell_value) >= s.points_required then
+						s:func_removed(player, px, py) -- just in case
 						s:func_added(player, px, py)
 						GameAddFlagRun("synergy_" .. s.id)
 						if s.skin_replacement ~= nil then
@@ -276,9 +308,11 @@ M.OnWorldPreUpdate = function()
 							table.insert(active_overlays, { active = true, s = s, skin = s._overlay_xml, has_arm = false })
 						end
 						GameAddFlagRun("outfit_changed")
+						print("Gained synergy: " .. s.id)
 					end
 				else
-					if pc >= (rp and rp.min_count or 0) and sc >= (rs and rs.min_count or 0) then
+					if pc >= (rp and rp.min_count or 0) and sc >= (rs and rs.min_count or 0) and (not rp or pr_ok) and (not rs or sr_ok) then
+						s:func_removed(player, px, py) -- just in case
 						s:func_added(player, px, py)
 						GameAddFlagRun("synergy_" .. s.id)
 						if s.skin_replacement ~= nil then
@@ -293,6 +327,7 @@ M.OnWorldPreUpdate = function()
 							table.insert(active_overlays, { active = true, s = s, skin = s._overlay_xml, has_arm = false })
 						end
 						GameAddFlagRun("outfit_changed")
+						print("Gained synergy: " .. s.id)
 					end
 				end
 			end
