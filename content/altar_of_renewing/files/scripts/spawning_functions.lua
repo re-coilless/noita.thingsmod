@@ -13,7 +13,6 @@ function spawn_altar_of_renewing(x, y, no_spawner_pixels)
 
 	EntityLoad("mods/noita.thingsmod/content/altar_of_renewing/files/entities/altar/altar.xml", x + 6, y - h + 1)
 	EntityLoad("mods/noita.thingsmod/content/altar_of_renewing/files/entities/altar/globe.xml", x + 6, y - h2 + 1)
-	print("did this shit even run? 2")
 end
 
 function spawn_altar(x, y)
