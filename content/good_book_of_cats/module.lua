@@ -62,6 +62,8 @@ function M.OnModInit()
             z_index="0.8",
         })
     end
+
+    ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", "mods/noita.thingsmod/content/good_book_of_cats/boss_arena.lua")
 end
 
 local page_nr = 1
@@ -176,11 +178,6 @@ function M.OnWorldPreUpdate()
     end
 
     draw_book()
-end
-
-function M.OnPlayerFirstSpawned(player_id)
-    local x, y = EntityGetTransform(player_id)
-    EntityLoad("mods/noita.thingsmod/content/good_book_of_cats/entities/book.xml", x - 20, y - 400)
 end
 
 return M
