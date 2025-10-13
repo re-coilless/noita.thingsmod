@@ -64,6 +64,13 @@ function M.OnModInit()
     end
 
     ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", "mods/noita.thingsmod/content/good_book_of_cats/boss_arena.lua")
+
+    if ModIsEnabled("component-explorer") then
+        ModLuaFileAppend(
+            "mods/component-explorer/spawn_data/items.lua",
+            "mods/noita.thingsmod/content/good_book_of_cats/ce_items.lua"
+        )
+    end
 end
 
 local page_nr = 1
