@@ -1,4 +1,6 @@
 local gui_options = require "lib.gui.gui_options"
+local nxml = require "lib.nxml.nxml"
+
 ---@type Module
 local M = {
     name = "The Good Book of Cats",
@@ -45,6 +47,30 @@ local cats = {
 
 function M.OnModInit()
     gui = GuiCreate()
+
+    for content in nxml.edit_file("data/entities/animals/boss_centipede/boss_centipede.xml") do
+        content:create_child("SpriteComponent", {
+            image_file="mods/noita.thingsmod/content/good_book_of_cats/gfx/kolmi_ears.png",
+            offset_y=tostring(48 + 24),
+            offset_x="48",
+            z_index="1",
+        })
+        content:create_child("SpriteComponent", {
+            image_file="mods/noita.thingsmod/content/good_book_of_cats/gfx/kolmi_whiskers.png",
+            offset_y=tostring(48 + 24),
+            offset_x="48",
+            z_index="0.8",
+        })
+    end
+
+    ModLuaFileAppend("data/scripts/biomes/boss_arena.lua", "mods/noita.thingsmod/content/good_book_of_cats/boss_arena.lua")
+
+    if ModIsEnabled("component-explorer") then
+        ModLuaFileAppend(
+            "mods/component-explorer/spawn_data/items.lua",
+            "mods/noita.thingsmod/content/good_book_of_cats/ce_items.lua"
+        )
+    end
 end
 
 local page_nr = 1
@@ -159,11 +185,6 @@ function M.OnWorldPreUpdate()
     end
 
     draw_book()
-end
-
-function M.OnPlayerFirstSpawned(player_id)
-    local x, y = EntityGetTransform(player_id)
-    EntityLoad("mods/noita.thingsmod/content/good_book_of_cats/entities/book.xml", x - 20, y - 400)
 end
 
 return M
