@@ -175,17 +175,17 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
 		local inter_alpha = pen.animate( 1, d.t, { ease_out = "exp", frames = d.frames })
 		pen.new.text_shad( pic_x + d.edging, pic_y + d.edging - 2, pic_z, info.name, {
 			dims = { size_x - icon_w - 3, size_y }, fully_featured = true, alpha = inter_alpha,
-			color = pen.PALETTE.VNL[( do_runes or is_sampo ) and "RUNIC" or "YELLOW" ]})
+			color = pen.P.VNL[( do_runes or is_sampo ) and "RUNIC" or "YELLOW" ]})
 		
         local clicked, _, is_hovered = pen.new.interface(
             pic_x + size_x - icon_w - readme_w, pic_y + d.edging - 1, readme_w, readme_h, pic_z )
         if( clicked ) then
-            pen.play_sound( pen.TUNES.VNL.CLICK )
+            pen.play_sound( pen.S.VNL.CLICK )
             xM.cat_book_state[ info.id ] = not( is_reading )
         end
 
         pen.new.text_shad( pic_x + size_x - icon_w - 7, pic_y + d.edging - 1, pic_z, readme, { is_right_x = true,
-            fully_featured = true, alpha = inter_alpha, color = pen.PALETTE.VNL[ is_hovered and "YELLOW" or ( is_reading and "RED" or "RUNIC" )]})
+            fully_featured = true, alpha = inter_alpha, color = pen.P.VNL[ is_hovered and "YELLOW" or ( is_reading and "RED" or "RUNIC" )]})
         
         if( is_reading ) then
             local book_x, book_y = pic_x + d.edging + 2, pic_y + d.edging + title_h
@@ -198,7 +198,7 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
                     lmb_event = function( pic_x, pic_y, pic_z, pic, d )
                         pen.atm( d.auid.."l", nil, true )
                         xM.cat_book_page[ info.id ] = page == 0 and #book_data or page - 1
-                        pen.play_sound( pen.TUNES.VNL.CLICK ) --page flipping sound
+                        pen.play_sound( pen.S.VNL.CLICK ) --page flipping sound
                         return pic_x, pic_y, pic_z, pic, d
                     end,
                     hov_event = function( pic_x, pic_y, pic_z, pic, d )
@@ -213,7 +213,7 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
                     lmb_event = function( pic_x, pic_y, pic_z, pic, d )
                         pen.atm( d.auid.."l", nil, true )
                         xM.cat_book_page[ info.id ] = page == #book_data and 0 or page + 1
-                        pen.play_sound( pen.TUNES.VNL.CLICK ) --page flipping sound
+                        pen.play_sound( pen.S.VNL.CLICK ) --page flipping sound
                         return pic_x, pic_y, pic_z, pic, d
                     end,
                     hov_event = function( pic_x, pic_y, pic_z, pic, d )
@@ -226,12 +226,12 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
                 local title = "mods/noita.thingsmod/content/index_compendium/files/cats/title_"..( is_kat and "K" or "C" )..".png"
                 pen.new.image( book_x + 55, book_y + 45, pic_z - 0.1, title )
                 pen.new.image( book_x + 163, book_y + 20, pic_z - 0.1, "mods/noita.thingsmod/content/index_compendium/files/cats/disclaimer.png" )
-                pen.new.text( book_x + 200, book_y + 100, pic_z - 0.1, "While all of the photos are of the real animals, not all specie names are attributed properly. It is incredibly hard to source good pictures, and some genera don't even have a common name.", { dims = { 75, -1 }, is_centered = true, color = pen.PALETTE.SHADOW })
+                pen.new.text( book_x + 200, book_y + 100, pic_z - 0.1, "While all of the photos are of the real animals, not all specie names are attributed properly. It is incredibly hard to source good pictures, and some genera don't even have a common name.", { dims = { 75, -1 }, is_centered = true, color = pen.P.SHADOW })
             else
                 local names = book_data[ page ]
                 pen.new.text( book_x + 73, book_y + 130, pic_z - 0.1,
                     "{>underscore>{{-}|VNL|RUNIC|FORCED|{-}"..names.name.."}<underscore<}",
-                    { fully_featured = true, color = pen.PALETTE.SHADOW, is_centered = true })
+                    { fully_featured = true, color = pen.P.SHADOW, is_centered = true })
                 pen.new.text( book_x + 73, book_y + 143, pic_z - 0.1, names.specie, { color = {179,160,132}, is_centered = true })
                 pen.new.text( book_x + 73, book_y + 152, pic_z - 0.1, names.science, { color = {225,211,183}, is_centered = true })
 
@@ -281,7 +281,7 @@ return function( info, tid, pic_x, pic_y, pic_z, is_simple )
 			if( runic_state ~= 1 ) then
 				pen.new.text_shad( pic_x + d.edging + 2, pic_y + d.edging + title_h, pic_z,
 					"{>runic>{"..info.desc.."}<runic<}", { dims = { desc_w + 2, size_y },
-					fully_featured = true, color = pen.PALETTE.VNL.RUNIC, alpha = inter_alpha*( 1 - runic_state ), line_offset = -2 })
+					fully_featured = true, color = pen.P.VNL.RUNIC, alpha = inter_alpha*( 1 - runic_state ), line_offset = -2 })
 				pen.magic_storage( info.id, "index_runic_cypher", "value_float", pen.estimate( "index_runic"..info.id, { 1, 0 }, "exp500" ))
 			end
 			if( runic_state > 0 ) then

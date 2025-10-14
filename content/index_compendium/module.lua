@@ -60,7 +60,7 @@ local M = {
 						EntitySetName( new_id, "kat_book" )
 
 						EntityAddComponent2( new_id, "VariableStorageComponent", {
-							name = "on_tooltip",
+							name = "on_tip",
 							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/tip.lua",
 						})
 						EntityAddComponent2( new_id, "VariableStorageComponent", {
@@ -97,7 +97,7 @@ local M = {
 						EntitySetName( new_id, "cat_book2" )
 
 						EntityAddComponent2( new_id, "VariableStorageComponent", {
-							name = "on_tooltip",
+							name = "on_tip",
 							value_string = "mods/noita.thingsmod/content/index_compendium/files/cats/tip.lua",
 						})
 						EntityAddComponent2( new_id, "VariableStorageComponent", {
