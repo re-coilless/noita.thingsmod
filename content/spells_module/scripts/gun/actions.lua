@@ -140,6 +140,7 @@ local custom_spellappends = {
 			c.extra_entities = c.extra_entities .. "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/hitfx_air_ray_enemy.xml,"
 			draw_actions( 1, true )
 		end,
+    },
     {
 		id          = "ROCK_SLINGER",
 		related_extra_entities = { "" },
@@ -152,10 +153,10 @@ local custom_spellappends = {
 		mana = 80,
 		max_uses = 20,
 		action = function()
-		    add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_slinger.xml")
-	    end,
-	},
-	},
+        add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_slinger.xml")
+        end,
+    },
+
 }
 
 for _, v in ipairs(custom_spellappends) do
