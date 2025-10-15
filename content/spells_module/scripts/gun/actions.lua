@@ -96,6 +96,48 @@ local custom_spellappends = {
             current_reload_time = current_reload_time + 60
         end,
     },
+    {
+	    id          = "AIR_BLAST",
+	    related_projectiles	= {"mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/airblast.xml"},
+	    type 		= ACTION_TYPE_STATIC_PROJECTILE,
+	    spawn_level                       = "0,1,3,5",
+	    spawn_probability                 = "0.5,0.7,0.6,0.4",
+	    price = 120,
+	    mana = 10,
+	    is_dangerous_blast = true,
+	    action 		= function()
+	    	add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/airblast.xml")
+	    	c.fire_rate_wait = c.fire_rate_wait + 3
+	    	c.screenshake = c.screenshake + 0.5
+	end,
+    },
+    {
+	    id          = "SEA_CEMENT",
+	    type 		= ACTION_TYPE_MATERIAL,
+	    spawn_level                       = "2,3,5", 
+	    spawn_probability                 = "0.05,0.1,0.4",
+	    price = 350,
+	    mana = 140,
+	    max_uses = 3,
+	    action 		= function()
+		add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/sea_cement.xml")
+		c.fire_rate_wait = c.fire_rate_wait + 15
+	end,
+    },
+    {
+		id          = "AIR_RAY_ENEMY",
+		related_extra_entities = { "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/hitfx_air_ray_enemy.xml" },
+		type 		= ACTION_TYPE_MODIFIER,
+		spawn_level                       = "1,2,4,5",
+		spawn_probability                 = "0.5,0.6,0.4,0.3",
+		price = 100,
+		mana = 80,
+		max_uses = 20,
+		action 		= function()
+			c.extra_entities = c.extra_entities .. "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/hitfx_air_ray_enemy.xml,"
+			draw_actions( 1, true )
+		end,
+	},
 }
 
 for _, v in ipairs(custom_spellappends) do
