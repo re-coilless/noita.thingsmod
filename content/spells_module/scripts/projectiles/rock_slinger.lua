@@ -14,7 +14,7 @@ if t_comp == nil then
 end
 
 local start_frame = ComponentGetValue2(t_comp, "value_int")
-local delay_frames = 24  -- ~0.4s at 60 FPS (tweak to match your animation)
+local delay_frames = 240  -- ~0.4s at 60 FPS (tweak to match your animation)
 if frame - start_frame < delay_frames then
   return
 end
@@ -29,9 +29,6 @@ local speed = 220
 -- (utilities.lua provides this helper)
 shoot_projectile_from_projectile(entity_id,"mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/airblast.xml",x + dir_x * 3, y + dir_y * 3,dir_x * speed, dir_y * speed
 )
-
--- (Optional) play a fire sound
-GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/rock/create", x, y)
 
 -- self-destruct
 EntityKill(entity_id)
