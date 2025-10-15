@@ -110,7 +110,7 @@ local custom_spellappends = {
 	    	add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/airblast.xml")
 	    	c.fire_rate_wait = c.fire_rate_wait + 3
 	    	c.screenshake = c.screenshake + 0.5
-	end,
+	    end,
     },
     {
 	    id          = "SEA_CEMENT",
@@ -124,7 +124,7 @@ local custom_spellappends = {
 	    action 		= function()
 		add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/sea_cement.xml")
 		c.fire_rate_wait = c.fire_rate_wait + 15
-	end,
+	    end,
     },
     {
 		id          = "AIR_RAY_ENEMY",
@@ -140,6 +140,21 @@ local custom_spellappends = {
 			c.extra_entities = c.extra_entities .. "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/hitfx_air_ray_enemy.xml,"
 			draw_actions( 1, true )
 		end,
+    {
+		id          = "ROCK_SLINGER",
+		related_extra_entities = { "" },
+		type 		= ACTION_TYPE_MODIFIER,
+        --TODO: Name, desc, item_icon
+		spawn_level                       = "1,2,4,5",
+		spawn_probability                 = "0.5,0.6,0.4,0.3",
+        author = "utterrn",
+		price = 100,
+		mana = 80,
+		max_uses = 20,
+		action = function()
+		    add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_slinger.xml")
+	    end,
+	},
 	},
 }
 

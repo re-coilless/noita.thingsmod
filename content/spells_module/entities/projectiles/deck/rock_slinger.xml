@@ -1,0 +1,34 @@
+<Entity name="rock_slinger_stone" tags="projectile">
+  <Base file="data/entities/base_projectile.xml" />
+
+  <SpriteComponent
+    image_file="data/items_gfx/rock.png"
+    offset_x="4"
+    offset_y="4"
+  />
+
+  <VelocityComponent
+    air_friction="0.98"
+    mass="1.5"
+  />
+
+  <ProjectileComponent
+    speed_min="0"
+    speed_max="0"
+    damage="0.1"
+    lifetime="240"
+    on_death_explode="0"
+  />
+
+  <LightComponent
+    radius="12"
+    r="120" g="100" b="80"
+    fade_out_time="0.2"
+  />
+
+  
+  <LuaComponent
+    script_source_file="mods/noita.thingsmod/content/spells_module/scripts/projectiles/deck/rock_slinger.lua"
+    execute_every_n_frame="1"
+  />
+</Entity>
