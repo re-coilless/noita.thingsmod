@@ -1,6 +1,6 @@
 <Sprite 
   default_animation="explosion" 
-  filename="mods/noita.thingsmod/content/air_and_cement_is_fun/actions/Airblast/explosion_air.png"
+  filename="mods/noita.thingsmod/content/spells_module/projectiles_gfx/explosion_air.png"
   offset_x="4" 
   offset_y="4" >
 

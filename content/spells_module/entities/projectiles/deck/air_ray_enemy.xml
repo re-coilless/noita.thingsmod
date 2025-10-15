@@ -3,7 +3,7 @@
 	
 	<LuaComponent 
 		_enabled="1" 
-		script_source_file="mods/noita.thingsmod/content/air_and_cement_is_fun/actions/personal_air_launcher/air_ray_enemy.lua" 
+		script_source_file="mods/noita.thingsmod/content/spells_module/scripts/projectiles/air_ray_enemy.lua" 
 		execute_every_n_frame="5">
    </LuaComponent>
 	
