@@ -36,7 +36,7 @@
 		emission_interval_min_frames="1"
 		emission_interval_max_frames="1"
 		emit_cosmetic_particles="1"
-		image_animation_file="mods/noita.thingsmod/content/spells_module/projectiles_gfx/sea_cement_pattern.pnd"
+		image_animation_file="mods/noita.thingsmod/content/spells_module/projectiles_gfx/sea_cement_pattern.png"
 		image_animation_speed="5"
 		image_animation_loop="0"
 		is_emitting="1" >
