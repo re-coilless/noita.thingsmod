@@ -1,0 +1,2 @@
+--every item gets defined separately, can with either an xml (just loads), a table (contains generic wand def) or a function
+--name, desc, icon, points, tooltip (to show contents)

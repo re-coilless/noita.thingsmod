@@ -1,0 +1,1 @@
+--cosmetics (support both sprite and offset based, some are unlockable)
