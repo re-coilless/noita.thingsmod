@@ -153,6 +153,7 @@ local custom_spellappends = {
 		mana = 5,
 		action = function()
         add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_slinger.xml")
+        c.fire_rate_wait = c.fire_rate_wait - 3
         end,
     },
 
