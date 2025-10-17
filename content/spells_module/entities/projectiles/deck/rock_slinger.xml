@@ -1,5 +1,8 @@
 <Entity name="rock_formation_caster" tags="projectile,rock_slinger_caster">
   <!-- Keep it stationary & ignore gravity -->
+  
+  
+  
   <Base file="data/entities/base_projectile.xml">
     <VelocityComponent gravity_y="0" />
     <ProjectileComponent
@@ -10,45 +13,55 @@
       lifetime="120" />
   </Base>
 
-  <!-- Formation animation -->
-  <SpriteComponent
-    image_file="mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_formation.png"
-    rect_animation="form"
-    offset_x="6"
-    offset_y="6"
-  >
-    <RectAnimation
-      name="form"
-      pos_x="0" pos_y="0"
-      frame_count="8"
-      frame_width="12" frame_height="12"
-      frames_per_row="8"
-      frame_wait="0.05"
-      loop="0"
-      shrink_by_one_pixel="0" />
-  </SpriteComponent>
 
-  <!-- Nice buildup particles (optional) -->
+ 
   <ParticleEmitterComponent
     emitted_material_name="cement"
     emission_interval_min_frames="1"
-    emission_interval_max_frames="1"
+    emission_interval_max_frames="2"
     gravity.y="0.0"
-	lifetime_min="25"
-	lifetime_max="25"
-	count_min="10"
-	count_max="10"
-    airflow_force="0.21"
-	airflow_time="1.01"
+  	lifetime_min="0.5"
+	  lifetime_max="1"
+  	count_min="1"
+	  count_max="2"
+    x_pos_offset_min="0"
+		x_pos_offset_max="2"
+		y_pos_offset_min="0"
+		y_pos_offset_max="2"
+		x_vel_min="-5"
+		x_vel_max="0"
+		y_vel_min="-5"
+		y_vel_max="0"
+    
     fade_based_on_lifetime="1"
     emit_cosmetic_particles="1"
     create_real_particles="0"
-    image_animation_file="mods/noita.thingsmod/content/spells_module/projectiles_gfx/rockanimatintest.png"
-	image_animation_speed="2"
-	image_animation_loop="0"
     is_emitting="1" />
 
-  <!-- Logic: wait for animation/delay, then fire real projectile -->
+    <ParticleEmitterComponent
+    emitted_material_name="cement"
+    emission_interval_min_frames="1"
+    emission_interval_max_frames="2"
+    gravity.y="0.0"
+	  lifetime_min="0.5"
+  	lifetime_max="1"
+	  count_min="1"
+  	count_max="2"
+    x_pos_offset_min="-2"
+		x_pos_offset_max="0"
+		y_pos_offset_min="-2"
+		y_pos_offset_max="0"
+		x_vel_min="0"
+		x_vel_max="5"
+		y_vel_min="0"
+		y_vel_max="5"
+    
+    fade_based_on_lifetime="1"
+    emit_cosmetic_particles="1"
+    create_real_particles="0"
+    is_emitting="1" />
+
+  <!-- Logic: wait for particle-animation/delay, then fire real projectile -->
   <LuaComponent
     script_source_file="mods/noita.thingsmod/content/spells_module/scripts/projectiles/rock_slinger.lua"
     execute_every_n_frame="1" />
