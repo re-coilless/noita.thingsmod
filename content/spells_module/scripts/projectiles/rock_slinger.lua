@@ -17,6 +17,9 @@ if not start_comp then
 		_tags = "rock_form_angle",
 		value_float = angle
 	})
+
+  local proj_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "ProjectileComponent")
+  ComponentSetValue2(proj_comp, "damage", 0)
   
 	return
 end
