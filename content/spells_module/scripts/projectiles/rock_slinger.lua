@@ -107,7 +107,7 @@ if not EntityHasTag(entity_id, "rock_launched") then
 		ComponentSetValue2(proj_comp, "velocity_sets_scale", 1)
 		ComponentSetValue2(proj_comp, "damage", 0.2)
 		ComponentSetValue2(proj_comp, "lifetime", 40)
-    ComponentSetValue2(proj_comp, "on_collision_die", 1)
+    ComponentSetValue2(proj_comp, "on_collision_die", true)
 
 		-- Reset lifetime and trigger internal movement state
 		EntitySetComponentIsEnabled(entity_id, proj_comp, false)

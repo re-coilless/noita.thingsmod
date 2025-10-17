@@ -145,7 +145,6 @@ local custom_spellappends = {
 		id          = "ROCK_SLINGER",
 		related_extra_entities = { "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/light_bullet_rock.xml" },
 		type = ACTION_TYPE_PROJECTILE,
-        --TODO: Name, desc, item_icon
 		spawn_level                       = "1,2,4,5",
 		spawn_probability                 = "0.5,0.6,0.4,0.3",
         author = "utterrn",
