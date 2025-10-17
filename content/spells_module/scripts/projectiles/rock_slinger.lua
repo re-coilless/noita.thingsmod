@@ -4,106 +4,110 @@ local entity_id = GetUpdatedEntityID()
 local frame = GameGetFrameNum()
 
 -- one-time init
-local t_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "rock_form_start")
-if not t_comp then
-  EntityAddComponent2(entity_id, "VariableStorageComponent", {
-    _tags = "rock_form_start",
-    value_int = frame
-  })
-
-  -- assign a fixed orbit angle so each rock forms in a different place
-  local angle = ((GameGetFrameNum() % 60) / 60) * (2 * math.pi)
-  EntityAddComponent2(entity_id, "VariableStorageComponent", {
-    _tags = "rock_form_angle",
-    value_float = angle
-  })
-
-  return
+local start_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "rock_form_start")
+if not start_comp then
+	EntityAddComponent2(entity_id, "VariableStorageComponent", {
+		_tags = "rock_form_start",
+		value_int = frame
+	})
+	-- give each rock a unique orbit angle
+	local angle = ((GameGetFrameNum() % 60) / 60) * (2 * math.pi)
+	EntityAddComponent2(entity_id, "VariableStorageComponent", {
+		_tags = "rock_form_angle",
+		value_float = angle
+	})
+	return
 end
 
-local start_frame = ComponentGetValue2(t_comp, "value_int")
-local delay_frames = 60
+local start_frame = ComponentGetValue2(start_comp, "value_int")
+local delay_frames = 60 -- hover duration
 
--- find the player
+-- get player + wand
 local players = EntityGetWithTag("player_unit")
 if #players == 0 then EntityKill(entity_id) return end
 local player = players[1]
-
---  STEP 1: FOLLOW WAND POSITION
--- find the active wand the player is holding
 local inventory = EntityGetFirstComponentIncludingDisabled(player, "Inventory2Component")
-if inventory then
-  local wand = ComponentGetValue2(inventory, "mActiveItem")
-  if wand ~= nil and wand ~= 0 then
-    local wand_x, wand_y, wand_rot = EntityGetTransform(wand)
+if not inventory then return end
+local wand = ComponentGetValue2(inventory, "mActiveItem")
+if wand == nil or wand == 0 then return end
 
-    -- get stored unique angle for this rock
-    local angle_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "rock_form_angle")
-    local angle = 0
-    if angle_comp then
-      angle = ComponentGetValue2(angle_comp, "value_float")
-    end
+-- find wand position
+local wand_x, wand_y, wand_rot = EntityGetTransform(wand)
+local base_x = wand_x + math.cos(wand_rot) * 12
+local base_y = wand_y + math.sin(wand_rot) * 12
 
-    -- base wand muzzle
-    local base_x = wand_x + math.cos(wand_rot) * 12
-    local base_y = wand_y + math.sin(wand_rot) * 12
+-- stored unique orbit angle
+local angle_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "rock_form_angle")
+local angle = 0
+if angle_comp then angle = ComponentGetValue2(angle_comp, "value_float") end
 
-    -- offset once (locked angle)
-    local radius = 10
-    local offset_x = math.cos(angle) * radius
-    local offset_y = math.sin(angle) * radius
+-- offset in circle
+local radius = 10
+local offset_x = math.cos(angle) * radius
+local offset_y = math.sin(angle) * radius
+local rot_cos, rot_sin = math.cos(wand_rot), math.sin(wand_rot)
+local rotated_x = offset_x * rot_cos - offset_y * rot_sin
+local rotated_y = offset_x * rot_sin + offset_y * rot_cos
+local x = base_x + rotated_x
+local y = base_y + rotated_y
 
-    -- rotate offset with wand facing
-    local rot_cos, rot_sin = math.cos(wand_rot), math.sin(wand_rot)
-    local rotated_x = offset_x * rot_cos - offset_y * rot_sin
-    local rotated_y = offset_x * rot_sin + offset_y * rot_cos
+local proj_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "ProjectileComponent")
 
-    local muzzle_x = base_x + rotated_x
-    local muzzle_y = base_y + rotated_y
-
-    EntitySetTransform(entity_id, muzzle_x, muzzle_y, wand_rot)
-  end
-end
-
---  STEP 2: wait for animation delay
+-- ✨ Hover phase
 if frame - start_frame < delay_frames then
-  return
+	EntitySetTransform(entity_id, x, y, wand_rot)
+	if proj_comp then
+		ComponentSetValue2(proj_comp, "speed_min", 0)
+		ComponentSetValue2(proj_comp, "speed_max", 0)
+	end
+	return
 end
 
--- STEP 3: aim direction
-local dir_x, dir_y = 0, 0
-local controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent")
+-- 💥 STEP 2: Launch once
+if not EntityHasTag(entity_id, "rock_launched") then
+	EntityAddTag(entity_id, "rock_launched")
 
-if controls then
-  dir_x, dir_y = ComponentGetValue2(controls, "mAimingVectorNormalized")
+	-- Aim direction
+	local dir_x, dir_y = 0, 0
+	local controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent")
+	if controls then
+		dir_x, dir_y = ComponentGetValue2(controls, "mAimingVectorNormalized")
+	end
+
+	if dir_x == 0 and dir_y == 0 then
+		dir_x, dir_y = math.cos(wand_rot), math.sin(wand_rot)
+	end
+
+	local len = math.sqrt(dir_x * dir_x + dir_y * dir_y)
+	if len == 0 then
+		dir_x, dir_y = 1, 0
+	else
+		dir_x, dir_y = dir_x / len, dir_y / len
+	end
+
+	-- === Properly launch the projectile ===
+	local speed = 700
+
+	local proj_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "ProjectileComponent")
+	local vel_comp  = EntityGetFirstComponentIncludingDisabled(entity_id, "VelocityComponent")
+
+	if vel_comp then
+		-- Give it real velocity
+		ComponentSetValue2(vel_comp, "mVelocity", dir_x * speed, dir_y * speed)
+	end
+
+	if proj_comp then
+		-- Make sure the ProjectileComponent wakes up and obeys physics
+		ComponentSetValue2(proj_comp, "speed_min", speed)
+		ComponentSetValue2(proj_comp, "speed_max", speed)
+		ComponentSetValue2(proj_comp, "velocity_sets_scale", 1)
+		ComponentSetValue2(proj_comp, "damage", 0.12)
+		ComponentSetValue2(proj_comp, "lifetime", 40)
+
+		-- Reset lifetime and trigger internal movement state
+		EntitySetComponentIsEnabled(entity_id, proj_comp, false)
+		EntitySetComponentIsEnabled(entity_id, proj_comp, true)
+	end
+
+	GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/rock/create", x, y)
 end
-
--- If ControlsComponent gives no direction, use mouse fallback
-if dir_x == 0 and dir_y == 0 then
-  local mx, my = DEBUG_GetMouseWorld()
-  local px, py = EntityGetTransform(player)
-  dir_x, dir_y = mx - px, my - py
-end
-
--- ✅ Normalize or use wand facing as fallback
-local len = math.sqrt(dir_x * dir_x + dir_y * dir_y)
-if len == 0 then
-  -- use wand facing if we have no valid aim vector
-  local _, _, wand_rot = EntityGetTransform(wand)
-  dir_x, dir_y = math.cos(wand_rot), math.sin(wand_rot)
-else
-  dir_x, dir_y = dir_x / len, dir_y / len
-end
-
---  STEP 4: fire projectile
-local x, y = EntityGetTransform(entity_id)
-local speed = 700
-shoot_projectile_from_projectile(
-  entity_id,
-  "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/light_bullet_rock.xml",
-  x + dir_x * 3, y + dir_y * 3,
-  dir_x * speed, dir_y * speed
-)
-
-GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/rock/create", x, y)
-EntityKill(entity_id)
