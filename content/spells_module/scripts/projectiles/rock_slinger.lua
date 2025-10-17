@@ -90,6 +90,8 @@ if not EntityHasTag(entity_id, "rock_launched") then
 
 	local proj_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "ProjectileComponent")
 	local vel_comp  = EntityGetFirstComponentIncludingDisabled(entity_id, "VelocityComponent")
+  local particle_components = EntityGetComponentIncludingDisabled(entity_id, "ParticleEmitterComponent") or {}
+
 
 	if vel_comp then
 		-- Give it real velocity
@@ -103,10 +105,21 @@ if not EntityHasTag(entity_id, "rock_launched") then
 		ComponentSetValue2(proj_comp, "velocity_sets_scale", 1)
 		ComponentSetValue2(proj_comp, "damage", 0.12)
 		ComponentSetValue2(proj_comp, "lifetime", 40)
+    ComponentSetValue2(proj_comp, "on_collision_die", 1)
 
 		-- Reset lifetime and trigger internal movement state
 		EntitySetComponentIsEnabled(entity_id, proj_comp, false)
 		EntitySetComponentIsEnabled(entity_id, proj_comp, true)
+
+    -- Change the projectiles
+    for _, comp in ipairs(particle_components) do
+      local emitting = ComponentGetValue2(comp, "is_emitting")
+	    if not emitting then
+		    ComponentSetValue2(comp, "is_emitting", true)
+      else ComponentSetValue2(comp, "is_emitting", false)
+	    end
+	    
+    end
 	end
 
 	GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/rock/create", x, y)
