@@ -10,7 +10,7 @@ local M = {
 		else return true end
 	end,
 	OnModInit = function()
-		pen.hallway( function()
+		pen.hallway( function() --initial book is broken
 			--if( disabled_modules[ "good_book_of_cats" ]) then return end
 			
 			--Katydid pic: https://fieldsofmistria.wiki.gg/wiki/Singing_Katydid
@@ -18,10 +18,10 @@ local M = {
 			--Book UI: https://www.deviantart.com/thisguy1045/art/Minecraft-Mod-Book-GUI-346997700
 			--Extra Book UI: https://www.curseforge.com/minecraft/mc-mods/exposure
 
-			local book_markers = { "<Entity name=\"cat_book\">", "\"\n.-></ItemComponent>" }
+			local book_markers = { "<Entity name=\"cat_book\">", "A book containing cat pictures. Handle with care." }
 			local book_path = "mods/noita.thingsmod/content/good_book_of_cats/entities/book.xml"
 			local book_file = string.gsub( pen.magic_read( book_path ), book_markers[1], "<Entity name=\"cat_book\" tags=\"forgeable\">" )
-			book_file = string.gsub( book_file, book_markers[2], "You feel like putting it into a forge... \"\n   ></ItemComponent>" )
+			book_file = string.gsub( book_file, book_markers[2], "A book containing cat pictures. Handle with care. You feel like putting it into a forge..." )
 			pen.magic_write( book_path, book_file )
 
 			local pic_marker = "mods/noita%.thingsmod/content/good_book_of_cats/gfx/book%.png"
