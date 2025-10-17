@@ -15,44 +15,67 @@ end
 
 local start_frame = ComponentGetValue2(t_comp, "value_int")
 local delay_frames = 60
-if frame - start_frame < delay_frames then return end
 
--- get player entity
+-- find the player
 local players = EntityGetWithTag("player_unit")
-if #players == 0 then
-  EntityKill(entity_id)
+if #players == 0 then EntityKill(entity_id) return end
+local player = players[1]
+
+--  STEP 1: FOLLOW WAND POSITION
+-- find the active wand the player is holding
+local inventory = EntityGetFirstComponentIncludingDisabled(player, "Inventory2Component")
+if inventory then
+  local wand = ComponentGetValue2(inventory, "mActiveItem")
+  if wand ~= nil and wand ~= 0 then
+    local wand_x, wand_y, wand_rot = EntityGetTransform(wand)
+
+    -- base wand muzzle
+    local base_x = wand_x + math.cos(wand_rot) * 12
+    local base_y = wand_y + math.sin(wand_rot) * 12
+
+    -- circular offset based on frame number
+    local angle = (GameGetFrameNum() % 60) / 60 * (2 * math.pi)
+    local radius = 10  -- tweak distance from wand
+    local offset_x = math.cos(angle) * radius
+    local offset_y = math.sin(angle) * radius
+
+    -- rotate the offset with the wand’s facing direction
+    local rot_cos, rot_sin = math.cos(wand_rot), math.sin(wand_rot)
+    local rotated_x = offset_x * rot_cos - offset_y * rot_sin
+    local rotated_y = offset_x * rot_sin + offset_y * rot_cos
+
+    -- final position
+    local muzzle_x = base_x + rotated_x
+    local muzzle_y = base_y + rotated_y
+
+    EntitySetTransform(entity_id, muzzle_x, muzzle_y, wand_rot)
+  end
+end
+
+--  STEP 2: wait for animation delay
+if frame - start_frame < delay_frames then
   return
 end
 
-local player = players[1]
-local x, y = EntityGetTransform(entity_id)
-
--- try to get aiming vector from ControlsComponent
+--  STEP 3: aim direction
 local dir_x, dir_y = 0, 0
 local controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent")
-if controls ~= nil then
+if controls then
   dir_x, dir_y = ComponentGetValue2(controls, "mAimingVectorNormalized")
 end
-
--- fallback if aim vector was zero
 if dir_x == 0 and dir_y == 0 then
   local mx, my = DEBUG_GetMouseWorld()
   local px, py = EntityGetTransform(player)
-  dir_x = mx - px
-  dir_y = my - py
+  dir_x, dir_y = mx - px, my - py
   local len = math.sqrt(dir_x^2 + dir_y^2)
   if len ~= 0 then dir_x, dir_y = dir_x / len, dir_y / len end
 end
+if dir_x == 0 and dir_y == 0 then dir_x, dir_y = 1, 0 end
 
--- fallback to rotation if all else fails
-if dir_x == 0 and dir_y == 0 then
-  local _, _, rot = EntityGetTransform(entity_id)
-  dir_x = math.cos(rot)
-  dir_y = math.sin(rot)
-end
-
--- launch the rock
+--  STEP 4: fire the projectile
+local x, y = EntityGetTransform(entity_id)
 local speed = 700
+
 shoot_projectile_from_projectile(
   entity_id,
   "mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/light_bullet_rock.xml",
