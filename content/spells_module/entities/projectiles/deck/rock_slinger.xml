@@ -3,7 +3,7 @@
     <VelocityComponent
       gravity_y="150"
       air_friction="1.7"
-	  mass="0.1"
+	    mass="0.1"
 	  >
     </VelocityComponent>
 	</Base>
@@ -77,14 +77,16 @@
     emission_interval_min_frames="1"
     emission_interval_max_frames="1"
     gravity.y="0.2"
-    lifetime_min="2.0"
-    lifetime_max="2.5"
-    count_min="4"
-    count_max="5"
+    lifetime_min="0.3"
+    lifetime_max="0.4"
+    count_min="6"
+    count_max="7"
     x_vel_min="-5"
     x_vel_max="0"
-    y_vel_min="0"
-    y_vel_max="0"
+    y_vel_min="-0.5"
+    y_vel_max="0.5"
+    x_pos_offset_min="1"
+    x_pos_offset_max="2"
     fade_based_on_lifetime="1"
     emit_cosmetic_particles="1"
     create_real_particles="0"
@@ -145,7 +147,7 @@
 
   <AudioComponent
     file="data/audio/Desktop/projectiles.bank"
-    event_root="player_projectiles/bullet_light" />
+    event_root="projectiles/fuse_burn_slow" />
 
   <LuaComponent
     script_source_file="mods/noita.thingsmod/content/spells_module/scripts/projectiles/rock_slinger.lua"

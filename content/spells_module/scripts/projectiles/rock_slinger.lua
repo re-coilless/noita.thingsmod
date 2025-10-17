@@ -9,6 +9,7 @@ if not start_comp then
 	EntityAddComponent2(entity_id, "VariableStorageComponent", {
 		_tags = "rock_form_start",
 		value_int = frame
+    
 	})
 	-- give each rock a unique orbit angle
 	local angle = ((GameGetFrameNum() % 60) / 60) * (2 * math.pi)
@@ -16,6 +17,7 @@ if not start_comp then
 		_tags = "rock_form_angle",
 		value_float = angle
 	})
+  
 	return
 end
 
@@ -53,7 +55,7 @@ local y = base_y + rotated_y
 
 local proj_comp = EntityGetFirstComponentIncludingDisabled(entity_id, "ProjectileComponent")
 
--- ✨ Hover phase
+--  Hover phase
 if frame - start_frame < delay_frames then
 	EntitySetTransform(entity_id, x, y, wand_rot)
 	if proj_comp then
@@ -63,7 +65,7 @@ if frame - start_frame < delay_frames then
 	return
 end
 
--- 💥 STEP 2: Launch once
+--  STEP 2: Launch once
 if not EntityHasTag(entity_id, "rock_launched") then
 	EntityAddTag(entity_id, "rock_launched")
 
@@ -103,7 +105,7 @@ if not EntityHasTag(entity_id, "rock_launched") then
 		ComponentSetValue2(proj_comp, "speed_min", speed)
 		ComponentSetValue2(proj_comp, "speed_max", speed)
 		ComponentSetValue2(proj_comp, "velocity_sets_scale", 1)
-		ComponentSetValue2(proj_comp, "damage", 0.12)
+		ComponentSetValue2(proj_comp, "damage", 0.2)
 		ComponentSetValue2(proj_comp, "lifetime", 40)
     ComponentSetValue2(proj_comp, "on_collision_die", 1)
 
@@ -120,7 +122,10 @@ if not EntityHasTag(entity_id, "rock_launched") then
 	    end
 	    
     end
+
+    GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/bullet_burst_of_air/create", x, y)
 	end
 
-	GamePlaySound("data/audio/Desktop/projectiles.bank", "player_projectiles/rock/create", x, y)
+
+	
 end

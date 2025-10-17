@@ -150,7 +150,7 @@ local custom_spellappends = {
 		spawn_probability                 = "0.5,0.6,0.4,0.3",
         author = "utterrn",
 		price = 100,
-		mana = 5,
+		mana = 7,
 		action = function()
         add_projectile("mods/noita.thingsmod/content/spells_module/entities/projectiles/deck/rock_slinger.xml")
         c.fire_rate_wait = c.fire_rate_wait - 3
